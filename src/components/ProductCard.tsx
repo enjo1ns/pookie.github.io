@@ -14,7 +14,7 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div 
-      className="group relative rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+      className="group relative rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
       style={{
         width: '205px',
         height: '321px',
@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       }}
     >
       {/* Product Image */}
-      <div className="w-full h-48 rounded-t-lg overflow-hidden flex items-center justify-center">
+      <div className="w-full h-48 overflow-hidden flex items-center justify-center">
         <img 
           src="/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png" 
           alt={product.name}
