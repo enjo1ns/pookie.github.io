@@ -7,6 +7,7 @@ interface Product {
   price: number;
   image: string;
   type: string;
+  isNew?: boolean;
 }
 
 interface ProductCardProps {
@@ -39,36 +40,50 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div 
       ref={cardRef}
-      className="group relative rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
+      className="group relative rounded-xl transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
       style={{
-        width: '230px',
-        height: '321px',
-        backgroundColor: 'rgba(16, 20, 24, 0.7)',
-        border: '1px solid #2A2F33',
-        boxShadow: '0 4px 20px rgba(255,255,255,0.1)'
+        width: '260px',
+        height: '360px',
+        backgroundColor: 'rgba(16, 20, 24, 0.8)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
       }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {/* NEW Badge */}
+      {product.isNew && (
+        <div className="absolute top-4 left-4 z-20">
+          <div 
+            className="bg-white text-black px-3 py-1 text-xs font-bold tracking-wider rounded-full"
+            style={{
+              boxShadow: '0 0 15px rgba(255,255,255,0.5)'
+            }}
+          >
+            NEW
+          </div>
+        </div>
+      )}
+
       {/* Product Image */}
-      <div className="w-full h-48 overflow-hidden flex items-center justify-center">
+      <div className="w-full h-56 overflow-hidden flex items-center justify-center bg-gradient-to-b from-transparent to-black/20">
         <img 
           src="/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png" 
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
 
       {/* Product Info */}
-      <div className="p-4 text-center">
-        <h3 className="font-inter font-medium text-white text-sm mb-2">
+      <div className="p-6 text-center">
+        <h3 className="font-inter font-semibold text-white text-base mb-2 tracking-wide">
           {product.name}
         </h3>
-        <p className="text-gray-400 text-xs mb-3">
+        <p className="text-gray-400 text-sm mb-4 font-light">
           {product.type}
         </p>
-        <p className="text-white font-semibold text-base">
+        <p className="text-white font-bold text-lg tracking-wider">
           ${product.price}
         </p>
       </div>
@@ -78,13 +93,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div 
           className="absolute pointer-events-none transition-all duration-200 ease-out"
           style={{
-            width: '120px',
-            height: '120px',
-            left: `${mousePosition.x - 60}px`,
-            top: `${mousePosition.y - 60}px`,
-            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)',
+            width: '140px',
+            height: '140px',
+            left: `${mousePosition.x - 70}px`,
+            top: `${mousePosition.y - 70}px`,
+            background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.08) 40%, transparent 70%)',
             borderRadius: '50%',
-            filter: 'blur(8px)',
+            filter: 'blur(10px)',
             zIndex: 10
           }}
         />
@@ -92,19 +107,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       {/* Hover Border Glow Effect */}
       <div 
-        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{
-          border: '2px solid rgba(255,255,255,0.6)',
-          boxShadow: '0 0 25px rgba(255,255,255,0.3), inset 0 0 25px rgba(255,255,255,0.1)'
+          border: '2px solid rgba(255,255,255,0.8)',
+          boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
         }}
       />
 
       {/* Lift Effect Shadow */}
       <div 
-        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10"
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10"
         style={{
-          boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
-          transform: 'translateY(10px)'
+          boxShadow: '0 25px 50px rgba(0,0,0,0.6)',
+          transform: 'translateY(15px)'
         }}
       />
     </div>
