@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       }}
     >
       {/* Product Image */}
-      <div className="w-full h-48 rounded-t-lg overflow-hidden flex items-center justify-center bg-black bg-opacity-20">
+      <div className="w-full h-48 rounded-t-lg overflow-hidden flex items-center justify-center">
         <img 
           src="/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png" 
           alt={product.name}

@@ -70,12 +70,12 @@ const HeroSection = () => {
       <div className="text-center max-w-3xl animate-fade-in-up relative z-10">
         {/* Creative Hook Elements */}
         <div className="mb-8 relative">
-          {/* Glowing orb effect */}
+          {/* Moon-like glowing orb with reduced brightness */}
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-16 w-32 h-32 rounded-full opacity-20 animate-pulse"
+            className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-16 w-24 h-24 rounded-full opacity-15 animate-pulse"
             style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)',
-              boxShadow: '0 0 60px rgba(255,255,255,0.2)'
+              background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)',
+              boxShadow: '0 0 30px rgba(255,255,255,0.1), inset 0 0 15px rgba(255,255,255,0.05)'
             }}
           />
           

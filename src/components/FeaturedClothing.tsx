@@ -50,7 +50,7 @@ const FeaturedClothing = () => {
 
   return (
     <section className="py-12 px-6">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Section Title */}
         <h2 
           className="font-cinzel text-2xl md:text-3xl text-white text-center mb-8"
@@ -61,8 +61,8 @@ const FeaturedClothing = () => {
           FEATURED CLOTHING
         </h2>
 
-        {/* Products Carousel */}
-        <div className="mt-8 relative">
+        {/* Products Carousel with increased spacing */}
+        <div className="mt-8 relative px-16">
           <Carousel 
             opts={{
               align: "start",
@@ -70,9 +70,9 @@ const FeaturedClothing = () => {
             }}
             className="w-full"
           >
-            <CarouselContent className="-ml-4">
+            <CarouselContent className="-ml-8">
               {products.map((product) => (
-                <CarouselItem key={product.id} className="pl-4 basis-auto">
+                <CarouselItem key={product.id} className="pl-8 basis-auto">
                   <ProductCard product={product} />
                 </CarouselItem>
               ))}
