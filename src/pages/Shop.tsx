@@ -1,42 +1,59 @@
 
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import CartSidebar from "../components/CartSidebar";
 import { Button } from "@/components/ui/button";
+import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
 
 const Shop = () => {
+  const { addToCart } = useCart();
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
 
   const products = [
     {
       id: 1,
-      name: "T-Shirt (Black)",
+      name: "Gothic Black T-Shirt",
       price: 50,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "T-Shirt"
+      type: "T-Shirt",
+      description: "Premium gothic black t-shirt with unique design"
     },
     {
       id: 2,
-      name: "Sweatshirt",
-      price: 40,
+      name: "Dark Sweatshirt",
+      price: 75,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Sweatshirt"
+      type: "Sweatshirt",
+      description: "Comfortable dark sweatshirt for the modern goth"
     },
     {
       id: 3,
-      name: "Hoodie",
-      price: 30,
+      name: "Shadow Hoodie",
+      price: 90,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Hoodie"
+      type: "Hoodie",
+      description: "Cozy hoodie with mysterious shadow designs"
     },
     {
       id: 4,
-      name: "T-Shirt (White)",
-      price: 30,
+      name: "White Gothic T-Shirt",
+      price: 45,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "T-Shirt"
+      type: "T-Shirt",
+      description: "Elegant white t-shirt with gothic aesthetics"
     }
   ];
+
+  const handleAddToCart = (product: typeof products[0]) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      type: product.type
+    });
+  };
 
   return (
     <div className="min-h-screen bg-black relative">
@@ -51,12 +68,13 @@ const Shop = () => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div className="absolute inset-0 bg-black bg-opacity-60" />
       </div>
 
       {/* Content */}
       <div className="relative z-10">
         <Navigation />
+        <CartSidebar />
         
         <div className="pt-24 px-6 pb-20">
           <div className="max-w-7xl mx-auto">
@@ -76,12 +94,12 @@ const Shop = () => {
                   textShadow: '0 0 10px rgba(255,255,255,0.3)'
                 }}
               >
-                Explore our collection of gothic apparel, tailored to embrace the shadows!
+                Explore our collection of gothic apparel, tailored to embrace the shadows
               </p>
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {products.map((product) => (
                 <div
                   key={product.id}
@@ -89,47 +107,56 @@ const Shop = () => {
                   onMouseEnter={() => setHoveredProduct(product.id)}
                   onMouseLeave={() => setHoveredProduct(null)}
                 >
-                  {/* Glassmorphism Card */}
+                  {/* Wide Product Card */}
                   <div 
                     className="relative rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      backdropFilter: 'blur(10px)',
+                      background: 'rgba(255, 255, 255, 0.08)',
+                      backdropFilter: 'blur(20px)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       boxShadow: hoveredProduct === product.id 
-                        ? '0 20px 40px rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.2)'
-                        : '0 8px 25px rgba(0, 0, 0, 0.3)'
+                        ? '0 25px 50px rgba(255, 255, 255, 0.1), 0 0 40px rgba(255, 255, 255, 0.2)'
+                        : '0 10px 30px rgba(0, 0, 0, 0.3)'
                     }}
                   >
-                    {/* Product Image */}
-                    <div className="aspect-square overflow-hidden">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </div>
+                    <div className="flex flex-col md:flex-row">
+                      {/* Product Image */}
+                      <div className="md:w-1/2 aspect-square md:aspect-auto overflow-hidden">
+                        <img 
+                          src={product.image} 
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        />
+                      </div>
 
-                    {/* Product Info */}
-                    <div className="p-6">
-                      <h3 className="font-inter font-semibold text-white text-lg mb-2">
-                        {product.name}
-                      </h3>
-                      <p className="text-gray-300 text-sm mb-4">
-                        {product.type}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-white font-bold text-xl">
-                          ${product.price}
-                        </span>
-                        <Button 
-                          className="bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
-                          style={{
-                            boxShadow: '0 4px 15px rgba(255, 255, 255, 0.1)'
-                          }}
-                        >
-                          Add to Cart
-                        </Button>
+                      {/* Product Info */}
+                      <div className="md:w-1/2 p-8 flex flex-col justify-between">
+                        <div>
+                          <h3 className="font-cinzel font-bold text-white text-xl mb-3">
+                            {product.name}
+                          </h3>
+                          <p className="text-gray-300 text-sm mb-2 uppercase tracking-wider">
+                            {product.type}
+                          </p>
+                          <p className="text-gray-400 text-sm mb-6">
+                            {product.description}
+                          </p>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <span className="text-white font-bold text-2xl">
+                            ${product.price}
+                          </span>
+                          <Button 
+                            onClick={() => handleAddToCart(product)}
+                            className="bg-white bg-opacity-10 border-2 border-white border-opacity-30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm px-6 py-2 font-medium"
+                            style={{
+                              boxShadow: '0 4px 15px rgba(255, 255, 255, 0.1)'
+                            }}
+                          >
+                            Add to Cart
+                          </Button>
+                        </div>
                       </div>
                     </div>
 

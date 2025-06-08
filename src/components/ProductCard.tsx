@@ -1,5 +1,6 @@
 
 import { useState, useRef, MouseEvent } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface Product {
   id: number;
@@ -11,9 +12,10 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart?: (product: Omit<Product, 'quantity'>) => void;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -36,13 +38,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
     setIsHovered(false);
   };
 
+  const handleAddToCart = () => {
+    if (onAddToCart) {
+      onAddToCart(product);
+    }
+  };
+
   return (
     <div 
       ref={cardRef}
       className="group relative rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
       style={{
         width: '230px',
-        height: '321px',
+        height: '380px',
         backgroundColor: 'rgba(16, 20, 24, 0.7)',
         border: '1px solid #2A2F33',
         boxShadow: '0 4px 20px rgba(255,255,255,0.1)'
@@ -61,16 +69,30 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </div>
 
       {/* Product Info */}
-      <div className="p-4 text-center">
-        <h3 className="font-inter font-medium text-white text-sm mb-2">
-          {product.name}
-        </h3>
-        <p className="text-gray-400 text-xs mb-3">
-          {product.type}
-        </p>
-        <p className="text-white font-semibold text-base">
-          ${product.price}
-        </p>
+      <div className="p-4 text-center flex flex-col justify-between h-32">
+        <div>
+          <h3 className="font-inter font-medium text-white text-sm mb-2">
+            {product.name}
+          </h3>
+          <p className="text-gray-400 text-xs mb-3">
+            {product.type}
+          </p>
+          <p className="text-white font-semibold text-base mb-3">
+            ${product.price}
+          </p>
+        </div>
+        
+        {onAddToCart && (
+          <Button 
+            onClick={handleAddToCart}
+            className="bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm text-xs py-1"
+            style={{
+              boxShadow: '0 2px 10px rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            Add to Cart
+          </Button>
+        )}
       </div>
 
       {/* Moving Glow Effect that follows mouse */}
