@@ -1,5 +1,5 @@
 
-import { Instagram, Heart } from "lucide-react";
+import { Instagram, Heart, Star } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -9,8 +9,8 @@ const Footer = () => {
           {/* Logo/Brand */}
           <div className="mb-4 md:mb-0">
             <div className="flex items-center space-x-2">
-              <span className="text-lg">🖤</span>
-              <span className="font-cinzel text-lg text-white">Dark Aesthetics</span>
+              <Star className="text-white" size={16} />
+              <span className="font-cinzel text-lg text-white">pookie</span>
             </div>
           </div>
 
