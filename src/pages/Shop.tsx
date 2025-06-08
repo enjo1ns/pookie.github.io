@@ -1,7 +1,6 @@
 
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import CartSidebar from "../components/CartSidebar";
 import { Button } from "@/components/ui/button";
 import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
@@ -74,7 +73,6 @@ const Shop = () => {
       {/* Content */}
       <div className="relative z-10">
         <Navigation />
-        <CartSidebar />
         
         <div className="pt-24 px-6 pb-20">
           <div className="max-w-7xl mx-auto">
@@ -115,11 +113,11 @@ const Shop = () => {
                 >
                   <div className="flex h-80">
                     {/* Product Image Side */}
-                    <div className="w-2/5 relative overflow-hidden">
+                    <div className="w-2/5 relative overflow-hidden rounded-l-2xl">
                       <img 
                         src={product.image} 
                         alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
                     </div>
