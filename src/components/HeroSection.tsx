@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Star, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -13,7 +14,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden pt-16">
       {/* Animated Bats that follow scroll */}
       <div className="absolute inset-0 pointer-events-none">
         <img 
@@ -110,21 +111,23 @@ const HeroSection = () => {
         </p>
 
         {/* CTA Button with enhanced styling and icon */}
-        <Button 
-          className="bg-transparent border-2 border-white text-white font-inter font-medium px-8 py-3 text-base hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] backdrop-blur-sm relative group"
-          style={{
-            boxShadow: '0 0 10px rgba(255,255,255,0.2)'
-          }}
-        >
-          <Sparkles className="mr-2" size={18} />
-          <span className="relative z-10">Shop the Darkness</span>
-          {/* Button glow effect on hover */}
-          <div className="absolute inset-0 rounded border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-               style={{
-                 boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
-               }}
-          />
-        </Button>
+        <Link to="/shop">
+          <Button 
+            className="bg-transparent border-2 border-white text-white font-inter font-medium px-8 py-3 text-base hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] backdrop-blur-sm relative group"
+            style={{
+              boxShadow: '0 0 10px rgba(255,255,255,0.2)'
+            }}
+          >
+            <Sparkles className="mr-2" size={18} />
+            <span className="relative z-10">Shop the Darkness</span>
+            {/* Button glow effect on hover */}
+            <div className="absolute inset-0 rounded border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                 style={{
+                   boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
+                 }}
+            />
+          </Button>
+        </Link>
       </div>
     </section>
   );

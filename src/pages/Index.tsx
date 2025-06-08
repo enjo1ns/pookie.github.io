@@ -1,4 +1,5 @@
 
+import Navigation from "../components/Navigation";
 import HeroSection from "../components/HeroSection";
 import FeaturedClothing from "../components/FeaturedClothing";
 import WhyUsSection from "../components/WhyUsSection";
@@ -23,6 +24,7 @@ const Index = () => {
 
       {/* Content */}
       <div className="relative z-10">
+        <Navigation />
         <HeroSection />
         <FeaturedClothing />
         <WhyUsSection />
