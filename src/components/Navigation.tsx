@@ -7,9 +7,8 @@ import CartSidebar from "./CartSidebar";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const location = useLocation();
-  const { cartItems } = useCart();
+  const { items } = useCart();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -22,11 +21,7 @@ const Navigation = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
@@ -64,34 +59,10 @@ const Navigation = () => {
                   />
                 </Link>
               ))}
-              
-              {/* Cart Button */}
-              <button
-                onClick={toggleCart}
-                className="relative text-white hover:text-gray-300 transition-colors duration-300 p-2"
-              >
-                <ShoppingCart size={20} />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
             </div>
 
-            {/* Mobile Menu Button and Cart */}
-            <div className="md:hidden flex items-center space-x-2">
-              <button
-                onClick={toggleCart}
-                className="relative text-white p-2"
-              >
-                <ShoppingCart size={20} />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-4 w-4 flex items-center justify-center font-medium">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
               <button
                 onClick={toggleMenu}
                 className="text-white p-2"
@@ -126,7 +97,7 @@ const Navigation = () => {
       </nav>
 
       {/* Cart Sidebar */}
-      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartSidebar />
     </>
   );
 };
