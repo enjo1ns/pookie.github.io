@@ -6,54 +6,54 @@ const FeaturedClothing = () => {
   const products = [
     {
       id: 1,
-      name: "Gothic T-Shirt",
-      price: 30,
-      image: "👕",
-      type: "T-Shirt"
+      name: "Gothic Hoodie",
+      price: 89,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Hoodie"
     },
     {
       id: 2,
       name: "Shadow Sweatshirt",
-      price: 45,
-      image: "🧥",
+      price: 75,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "Sweatshirt"
     },
     {
       id: 3,
       name: "Dark Hoodie",
-      price: 60,
-      image: "👘",
+      price: 92,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "Hoodie"
     },
     {
       id: 4,
-      name: "Midnight Tee",
-      price: 30,
-      image: "🎽",
-      type: "T-Shirt"
-    },
-    {
-      id: 5,
-      name: "Black Jacket",
-      price: 80,
-      image: "🧥",
+      name: "Midnight Jacket",
+      price: 135,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "Jacket"
     },
     {
+      id: 5,
+      name: "Black Hoodie",
+      price: 88,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Hoodie"
+    },
+    {
       id: 6,
-      name: "Gothic Dress",
-      price: 120,
-      image: "👗",
-      type: "Dress"
+      name: "Gothic Jacket",
+      price: 150,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Jacket"
     }
   ];
 
   return (
-    <section className="py-16 px-6">
+    <section className="py-12 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <h2 
-          className="font-cinzel text-2xl md:text-3xl text-white text-center mb-4"
+          className="font-cinzel text-2xl md:text-3xl text-white text-center mb-8"
           style={{
             textShadow: '0 0 8px rgba(255,255,255,0.3)'
           }}
@@ -62,7 +62,7 @@ const FeaturedClothing = () => {
         </h2>
 
         {/* Products Carousel */}
-        <div className="mt-12 relative">
+        <div className="mt-8 relative">
           <Carousel 
             opts={{
               align: "start",
@@ -70,15 +70,19 @@ const FeaturedClothing = () => {
             }}
             className="w-full"
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
+            <CarouselContent className="-ml-4">
               {products.map((product) => (
-                <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                <CarouselItem key={product.id} className="pl-4 basis-auto">
                   <ProductCard product={product} />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="bg-white bg-opacity-10 border-white border-opacity-20 hover:bg-opacity-20 text-white" />
-            <CarouselNext className="bg-white bg-opacity-10 border-white border-opacity-20 hover:bg-opacity-20 text-white" />
+            <CarouselPrevious 
+              className="bg-white bg-opacity-10 border-white border-opacity-20 hover:bg-opacity-20 text-white -left-12 transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]" 
+            />
+            <CarouselNext 
+              className="bg-white bg-opacity-10 border-white border-opacity-20 hover:bg-opacity-20 text-white -right-12 transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]" 
+            />
           </Carousel>
         </div>
       </div>
