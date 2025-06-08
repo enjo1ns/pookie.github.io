@@ -99,78 +99,118 @@ const Shop = () => {
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="group relative"
+                  className="group relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.06)',
+                    backdropFilter: 'blur(25px)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05)'
+                  }}
                   onMouseEnter={() => setHoveredProduct(product.id)}
                   onMouseLeave={() => setHoveredProduct(null)}
                 >
-                  {/* Wide Product Card */}
-                  <div 
-                    className="relative rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(20px)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      boxShadow: hoveredProduct === product.id 
-                        ? '0 25px 50px rgba(255, 255, 255, 0.1), 0 0 40px rgba(255, 255, 255, 0.2)'
-                        : '0 10px 30px rgba(0, 0, 0, 0.3)'
-                    }}
-                  >
-                    <div className="flex flex-col md:flex-row">
-                      {/* Product Image */}
-                      <div className="md:w-1/2 aspect-square md:aspect-auto overflow-hidden">
-                        <img 
-                          src={product.image} 
-                          alt={product.name}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                        />
-                      </div>
-
-                      {/* Product Info */}
-                      <div className="md:w-1/2 p-8 flex flex-col justify-between">
-                        <div>
-                          <h3 className="font-cinzel font-bold text-white text-xl mb-3">
-                            {product.name}
-                          </h3>
-                          <p className="text-gray-300 text-sm mb-2 uppercase tracking-wider">
-                            {product.type}
-                          </p>
-                          <p className="text-gray-400 text-sm mb-6">
-                            {product.description}
-                          </p>
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <span className="text-white font-bold text-2xl">
-                            ${product.price}
-                          </span>
-                          <Button 
-                            onClick={() => handleAddToCart(product)}
-                            className="bg-white bg-opacity-10 border-2 border-white border-opacity-30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm px-6 py-2 font-medium"
-                            style={{
-                              boxShadow: '0 4px 15px rgba(255, 255, 255, 0.1)'
-                            }}
-                          >
-                            Add to Cart
-                          </Button>
-                        </div>
-                      </div>
+                  <div className="flex h-80">
+                    {/* Product Image Side */}
+                    <div className="w-2/5 relative overflow-hidden">
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
                     </div>
 
-                    {/* Hover Glow Effect */}
-                    {hoveredProduct === product.id && (
-                      <div 
-                        className="absolute inset-0 rounded-xl pointer-events-none"
-                        style={{
-                          background: 'linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-                          boxShadow: 'inset 0 0 30px rgba(255,255,255,0.2)'
-                        }}
-                      />
-                    )}
+                    {/* Product Details Side */}
+                    <div className="w-3/5 p-8 flex flex-col justify-between relative">
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <span 
+                            className="text-xs font-medium tracking-[3px] uppercase"
+                            style={{
+                              background: 'linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
+                              WebkitBackgroundClip: 'text',
+                              WebkitTextFillColor: 'transparent',
+                              backgroundClip: 'text'
+                            }}
+                          >
+                            {product.type}
+                          </span>
+                          <div 
+                            className="w-12 h-px"
+                            style={{
+                              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)'
+                            }}
+                          />
+                        </div>
+                        
+                        <h3 className="font-cinzel font-bold text-white text-2xl mb-4 leading-tight">
+                          {product.name}
+                        </h3>
+                        
+                        <p className="text-gray-300 text-sm leading-relaxed mb-6 opacity-90">
+                          {product.description}
+                        </p>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
+                          <span className="text-gray-400 text-xs uppercase tracking-wider mb-1">Price</span>
+                          <span 
+                            className="text-3xl font-bold"
+                            style={{
+                              background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)',
+                              WebkitBackgroundClip: 'text',
+                              WebkitTextFillColor: 'transparent',
+                              backgroundClip: 'text'
+                            }}
+                          >
+                            ${product.price}
+                          </span>
+                        </div>
+                        
+                        <Button 
+                          onClick={() => handleAddToCart(product)}
+                          className="relative px-8 py-3 font-medium text-white border-2 border-white/20 rounded-xl transition-all duration-300 hover:border-white/40 hover:shadow-lg hover:shadow-white/10 group/btn overflow-hidden"
+                          style={{
+                            background: 'rgba(255, 255, 255, 0.08)',
+                            backdropFilter: 'blur(10px)'
+                          }}
+                        >
+                          <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-black">
+                            Add to Cart
+                          </span>
+                          <div className="absolute inset-0 bg-white transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left" />
+                        </Button>
+                      </div>
+
+                      {/* Floating Glow Effect */}
+                      {hoveredProduct === product.id && (
+                        <div 
+                          className="absolute top-4 right-4 w-20 h-20 rounded-full pointer-events-none animate-pulse"
+                          style={{
+                            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
+                            filter: 'blur(10px)'
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
+
+                  {/* Hover Border Effect */}
+                  <div 
+                    className={`absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 ${
+                      hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    style={{
+                      background: 'linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(255,255,255,0.1))',
+                      backgroundSize: '200% 200%',
+                      animation: hoveredProduct === product.id ? 'gradient-shift 2s ease infinite' : 'none'
+                    }}
+                  />
                 </div>
               ))}
             </div>
@@ -179,6 +219,13 @@ const Shop = () => {
 
         <Footer />
       </div>
+
+      <style jsx>{`
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+      `}</style>
     </div>
   );
 };
