@@ -1,4 +1,6 @@
 
+import { useState, useRef, MouseEvent } from 'react';
+
 interface Product {
   id: number;
   name: string;
@@ -12,16 +14,42 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    setMousePosition({ x, y });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <div 
+      ref={cardRef}
       className="group relative rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
       style={{
-        width: '205px',
+        width: '230px',
         height: '321px',
         backgroundColor: 'rgba(16, 20, 24, 0.7)',
         border: '1px solid #2A2F33',
         boxShadow: '0 4px 20px rgba(255,255,255,0.1)'
       }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Product Image */}
       <div className="w-full h-48 overflow-hidden flex items-center justify-center">
@@ -44,6 +72,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
           ${product.price}
         </p>
       </div>
+
+      {/* Moving Glow Effect that follows mouse */}
+      {isHovered && (
+        <div 
+          className="absolute pointer-events-none transition-all duration-200 ease-out"
+          style={{
+            width: '120px',
+            height: '120px',
+            left: `${mousePosition.x - 60}px`,
+            top: `${mousePosition.y - 60}px`,
+            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)',
+            borderRadius: '50%',
+            filter: 'blur(8px)',
+            zIndex: 10
+          }}
+        />
+      )}
 
       {/* Hover Border Glow Effect */}
       <div 
