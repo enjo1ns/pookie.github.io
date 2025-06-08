@@ -14,21 +14,12 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
-      {/* Cobweb in upper left corner */}
-      <div className="absolute top-8 left-8 z-20 transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:scale-105 cursor-pointer">
-        <img 
-          src="/lovable-uploads/16287622-2555-40d2-8922-e6c10d009d98.png" 
-          alt="cobweb decoration"
-          className="w-24 h-24 opacity-60 hover:opacity-80 transition-opacity duration-300"
-        />
-      </div>
-
       {/* Animated Bats that follow scroll */}
       <div className="absolute inset-0 pointer-events-none">
         <img 
           src="/lovable-uploads/49935eb7-dfd9-4883-b890-e9474054b293.png" 
           alt="bat"
-          className="absolute opacity-40 transition-all duration-1000 ease-out w-6 h-6"
+          className="absolute opacity-40 transition-all duration-1000 ease-out w-8 h-8"
           style={{
             top: `${20 + scrollY * 0.1}px`,
             left: `${25 + scrollY * 0.05}%`,
@@ -38,7 +29,7 @@ const HeroSection = () => {
         <img 
           src="/lovable-uploads/49935eb7-dfd9-4883-b890-e9474054b293.png" 
           alt="bat"
-          className="absolute opacity-30 transition-all duration-1000 ease-out w-5 h-5" 
+          className="absolute opacity-30 transition-all duration-1000 ease-out w-6 h-6" 
           style={{
             top: `${160 + scrollY * 0.08}px`,
             right: `${20 + scrollY * 0.03}%`,
@@ -48,7 +39,7 @@ const HeroSection = () => {
         <img 
           src="/lovable-uploads/49935eb7-dfd9-4883-b890-e9474054b293.png" 
           alt="bat"
-          className="absolute opacity-35 transition-all duration-1000 ease-out w-6 h-6"
+          className="absolute opacity-35 transition-all duration-1000 ease-out w-7 h-7"
           style={{
             top: `${240 + scrollY * 0.12}px`,
             left: `${15 + scrollY * 0.04}%`,
@@ -58,7 +49,7 @@ const HeroSection = () => {
         <img 
           src="/lovable-uploads/49935eb7-dfd9-4883-b890-e9474054b293.png" 
           alt="bat"
-          className="absolute opacity-25 transition-all duration-1000 ease-out w-4 h-4"
+          className="absolute opacity-25 transition-all duration-1000 ease-out w-5 h-5"
           style={{
             top: `${100 + scrollY * 0.06}px`,
             right: `${35 + scrollY * 0.07}%`,
@@ -68,7 +59,7 @@ const HeroSection = () => {
         <img 
           src="/lovable-uploads/49935eb7-dfd9-4883-b890-e9474054b293.png" 
           alt="bat"
-          className="absolute opacity-20 transition-all duration-1000 ease-out w-5 h-5"
+          className="absolute opacity-20 transition-all duration-1000 ease-out w-6 h-6"
           style={{
             top: `${320 + scrollY * 0.09}px`,
             left: `${60 + scrollY * 0.02}%`,
@@ -77,9 +68,9 @@ const HeroSection = () => {
         />
       </div>
 
-      <div className="text-center max-w-4xl animate-fade-in-up relative z-10">
+      <div className="text-center max-w-3xl animate-fade-in-up relative z-10">
         {/* Creative Hook Elements */}
-        <div className="mb-12 relative">
+        <div className="mb-8 relative">
           {/* Floating mystical symbols */}
           <div className="absolute -top-8 -left-8 text-white opacity-30 animate-float text-2xl">✦</div>
           <div className="absolute -top-12 -right-6 text-white opacity-25 animate-float text-xl" style={{ animationDelay: '1s' }}>◊</div>
@@ -87,34 +78,32 @@ const HeroSection = () => {
         </div>
 
         {/* Main Title with Premium Icon */}
-        <div className="flex items-center justify-center mb-6">
-          <Star className="text-white mr-4 opacity-90" size={28} />
+        <div className="flex items-center justify-center mb-4">
+          <Star className="text-white mr-3 opacity-80" size={24} />
           <h1 
-            className="font-cinzel font-bold text-5xl md:text-7xl lg:text-8xl text-white relative tracking-wide"
+            className="font-cinzel font-bold text-4xl md:text-5xl text-white relative"
             style={{
-              textShadow: '0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3)',
-              letterSpacing: '0.05em'
+              textShadow: '0 0 10px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2)'
             }}
           >
             Pookie
             {/* Underline glow effect */}
             <div 
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 opacity-70"
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-px opacity-60"
               style={{
-                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
-                boxShadow: '0 0 15px rgba(255,255,255,0.5)'
+                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
+                boxShadow: '0 0 8px rgba(255,255,255,0.4)'
               }}
             />
           </h1>
-          <Star className="text-white ml-4 opacity-90" size={28} />
+          <Star className="text-white ml-3 opacity-80" size={24} />
         </div>
 
         {/* Subheading */}
         <p 
-          className="font-inter text-lg md:text-xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed tracking-wide"
+          className="font-inter text-base md:text-lg text-gray-300 mb-8 max-w-xl mx-auto leading-relaxed"
           style={{
-            textShadow: '0 0 10px rgba(255,255,255,0.3)',
-            letterSpacing: '0.025em'
+            textShadow: '0 0 8px rgba(255,255,255,0.2)'
           }}
         >
           Unveil a darkly aesthetic wardrobe, curated for the bold and beautiful souls who dance with darkness.
@@ -122,18 +111,17 @@ const HeroSection = () => {
 
         {/* CTA Button with enhanced styling and icon */}
         <Button 
-          className="bg-transparent border-2 border-white text-white font-inter font-semibold px-10 py-4 text-lg hover:bg-white hover:text-black transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] backdrop-blur-sm relative group tracking-wide"
+          className="bg-transparent border-2 border-white text-white font-inter font-medium px-8 py-3 text-base hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] backdrop-blur-sm relative group"
           style={{
-            boxShadow: '0 0 15px rgba(255,255,255,0.3)',
-            letterSpacing: '0.05em'
+            boxShadow: '0 0 10px rgba(255,255,255,0.2)'
           }}
         >
-          <Sparkles className="mr-3" size={20} />
+          <Sparkles className="mr-2" size={18} />
           <span className="relative z-10">Shop the Darkness</span>
           {/* Button glow effect on hover */}
-          <div className="absolute inset-0 rounded border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          <div className="absolute inset-0 rounded border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                style={{
-                 boxShadow: '0 0 40px rgba(255,255,255,0.5), inset 0 0 40px rgba(255,255,255,0.1)'
+                 boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
                }}
           />
         </Button>
