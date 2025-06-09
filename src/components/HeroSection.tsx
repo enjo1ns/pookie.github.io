@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [batClicked, setBatClicked] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -13,8 +14,29 @@ const HeroSection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleBatClick = () => {
+    setBatClicked(true);
+    setTimeout(() => setBatClicked(false), 1000);
+  };
+
   return (
     <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden pt-16">
+      {/* Interactive Corner Bat */}
+      <div className="absolute top-4 right-4 z-20">
+        <img 
+          src="/lovable-uploads/b64407f9-ac90-4973-8a85-05c0f1a51b08.png" 
+          alt="Interactive bat"
+          className={`w-12 h-12 cursor-pointer transition-all duration-500 hover:scale-125 hover:rotate-12 ${
+            batClicked ? 'animate-bounce scale-150 rotate-45' : ''
+          }`}
+          onClick={handleBatClick}
+          style={{
+            filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.3))',
+            opacity: 0.8
+          }}
+        />
+      </div>
+
       {/* Animated Bats that follow scroll */}
       <div className="absolute inset-0 pointer-events-none">
         <img 

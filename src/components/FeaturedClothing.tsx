@@ -47,33 +47,33 @@ const FeaturedClothing = () => {
     switch (theme) {
       case "purple":
         return {
-          primary: "rgba(147, 51, 234, 0.3)",
-          secondary: "rgba(147, 51, 234, 0.1)",
-          glow: "rgba(147, 51, 234, 0.4)"
+          primary: "rgba(147, 51, 234, 0.15)",
+          secondary: "rgba(147, 51, 234, 0.05)",
+          glow: "rgba(147, 51, 234, 0.2)"
         };
       case "blue":
         return {
-          primary: "rgba(59, 130, 246, 0.3)",
-          secondary: "rgba(59, 130, 246, 0.1)",
-          glow: "rgba(59, 130, 246, 0.4)"
+          primary: "rgba(59, 130, 246, 0.15)",
+          secondary: "rgba(59, 130, 246, 0.05)",
+          glow: "rgba(59, 130, 246, 0.2)"
         };
       case "red":
         return {
-          primary: "rgba(239, 68, 68, 0.3)",
-          secondary: "rgba(239, 68, 68, 0.1)",
-          glow: "rgba(239, 68, 68, 0.4)"
+          primary: "rgba(239, 68, 68, 0.15)",
+          secondary: "rgba(239, 68, 68, 0.05)",
+          glow: "rgba(239, 68, 68, 0.2)"
         };
       case "green":
         return {
-          primary: "rgba(34, 197, 94, 0.3)",
-          secondary: "rgba(34, 197, 94, 0.1)",
-          glow: "rgba(34, 197, 94, 0.4)"
+          primary: "rgba(34, 197, 94, 0.15)",
+          secondary: "rgba(34, 197, 94, 0.05)",
+          glow: "rgba(34, 197, 94, 0.2)"
         };
       default:
         return {
-          primary: "rgba(255, 255, 255, 0.3)",
-          secondary: "rgba(255, 255, 255, 0.1)",
-          glow: "rgba(255, 255, 255, 0.4)"
+          primary: "rgba(255, 255, 255, 0.15)",
+          secondary: "rgba(255, 255, 255, 0.05)",
+          glow: "rgba(255, 255, 255, 0.2)"
         };
     }
   };
@@ -104,17 +104,17 @@ const FeaturedClothing = () => {
       {/* Enhanced magical particles background with dynamic colors */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div 
-          className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full animate-ping opacity-30"
+          className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full animate-ping opacity-20"
           style={{ backgroundColor: currentColors.primary }}
         ></div>
-        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-pulse opacity-40"></div>
+        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-pulse opacity-25"></div>
         <div 
-          className="absolute top-1/2 left-1/3 w-1.5 h-1.5 rounded-full animate-bounce opacity-20"
+          className="absolute top-1/2 left-1/3 w-1.5 h-1.5 rounded-full animate-bounce opacity-15"
           style={{ backgroundColor: currentColors.primary }}
         ></div>
-        <div className="absolute top-1/6 right-1/3 w-1 h-1 bg-white rounded-full animate-ping opacity-25"></div>
+        <div className="absolute top-1/6 right-1/3 w-1 h-1 bg-white rounded-full animate-ping opacity-20"></div>
         <div 
-          className="absolute bottom-1/4 left-1/5 w-2 h-2 rounded-full animate-pulse opacity-30"
+          className="absolute bottom-1/4 left-1/5 w-2 h-2 rounded-full animate-pulse opacity-20"
           style={{ backgroundColor: currentColors.primary }}
         ></div>
       </div>
@@ -124,7 +124,7 @@ const FeaturedClothing = () => {
         <h2 
           className="font-avenir text-2xl md:text-3xl text-white text-center mb-16 animate-pulse transition-all duration-700"
           style={{
-            textShadow: `0 0 20px ${currentColors.glow}, 0 0 40px ${currentColors.secondary}`
+            textShadow: `0 0 10px ${currentColors.glow}, 0 0 20px ${currentColors.secondary}`
           }}
         >
           FEATURED CLOTHING
@@ -138,7 +138,7 @@ const FeaturedClothing = () => {
               onClick={prevSlide}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-30 rounded-full p-3 text-white hover:bg-opacity-20 transition-all duration-300 hover:scale-110 group"
               style={{
-                boxShadow: `0 4px 20px ${currentColors.secondary}, 0 0 30px ${currentColors.secondary}`,
+                boxShadow: `0 4px 15px ${currentColors.secondary}, 0 0 15px ${currentColors.secondary}`,
                 borderColor: currentColors.primary
               }}
             >
@@ -151,7 +151,7 @@ const FeaturedClothing = () => {
               onClick={nextSlide}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-30 rounded-full p-3 text-white hover:bg-opacity-20 transition-all duration-300 hover:scale-110 group"
               style={{
-                boxShadow: `0 4px 20px ${currentColors.secondary}, 0 0 30px ${currentColors.secondary}`,
+                boxShadow: `0 4px 15px ${currentColors.secondary}, 0 0 15px ${currentColors.secondary}`,
                 borderColor: currentColors.primary
               }}
             >
@@ -194,7 +194,7 @@ const FeaturedClothing = () => {
                       backgroundColor: 'rgba(16, 20, 24, 0.8)',
                       border: isActive ? `2px solid ${currentColors.primary}` : '1px solid #2A2F33',
                       boxShadow: isActive 
-                        ? `0 20px 60px ${currentColors.secondary}, 0 0 40px ${currentColors.glow}` 
+                        ? `0 10px 30px ${currentColors.secondary}, 0 0 20px ${currentColors.glow}` 
                         : '0 4px 20px rgba(255,255,255,0.05)'
                     }}
                   >
@@ -205,12 +205,12 @@ const FeaturedClothing = () => {
                         alt={product.name}
                         className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                         style={{
-                          filter: `drop-shadow(0 0 15px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.2)'})`
+                          filter: `drop-shadow(0 0 8px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.1)'})`
                         }}
                       />
                       {/* Enhanced magical shimmer effect with dynamic colors */}
                       <div 
-                        className="absolute inset-0 opacity-0 group-hover:opacity-20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-1000"
+                        className="absolute inset-0 opacity-0 group-hover:opacity-15 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-1000"
                         style={{
                           background: `linear-gradient(to right, transparent, ${currentColors.primary}, transparent)`
                         }}
@@ -223,7 +223,7 @@ const FeaturedClothing = () => {
                         <h3 
                           className="font-avenir font-medium text-white text-base mb-2"
                           style={{
-                            textShadow: `0 0 5px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.2)'}`
+                            textShadow: `0 0 3px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.1)'}`
                           }}
                         >
                           {product.name}
@@ -234,7 +234,7 @@ const FeaturedClothing = () => {
                         <p 
                           className="text-white font-avenir font-semibold text-lg mb-4"
                           style={{
-                            textShadow: `0 0 8px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.3)'}`
+                            textShadow: `0 0 4px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.15)'}`
                           }}
                         >
                           ${product.price}
@@ -246,7 +246,7 @@ const FeaturedClothing = () => {
                         onClick={() => handleAddToCart(product)}
                         className="transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2 hover:scale-105 font-sf opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
                         style={{
-                          boxShadow: `0 2px 10px ${currentColors.secondary}, 0 0 20px ${currentColors.secondary}`,
+                          boxShadow: `0 2px 8px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
                           borderColor: isActive ? currentColors.primary : 'rgba(255, 255, 255, 0.3)'
                         }}
                       >
@@ -261,7 +261,7 @@ const FeaturedClothing = () => {
                       }`}
                       style={{
                         border: `2px solid ${currentColors.primary}`,
-                        boxShadow: `0 0 30px ${currentColors.glow}, inset 0 0 30px ${currentColors.secondary}`
+                        boxShadow: `0 0 15px ${currentColors.glow}, inset 0 0 15px ${currentColors.secondary}`
                       }}
                     />
 
@@ -294,7 +294,7 @@ const FeaturedClothing = () => {
                 }`}
                 style={{
                   backgroundColor: index === currentIndex ? currentColors.primary : undefined,
-                  boxShadow: index === currentIndex ? `0 0 20px ${currentColors.glow}` : 'none'
+                  boxShadow: index === currentIndex ? `0 0 10px ${currentColors.glow}` : 'none'
                 }}
               />
             ))}
