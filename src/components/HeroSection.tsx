@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Star, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import Spline from '@splinetool/react-spline';
 
 const HeroSection = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -21,7 +20,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-between px-6 relative overflow-hidden pt-16">
+    <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden pt-16">
       {/* Interactive Corner Bat */}
       <div className="absolute top-4 right-4 z-20">
         <img 
@@ -92,17 +91,17 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Left Content */}
-      <div className="text-left max-w-xl animate-fade-in-up relative z-10 flex-1">
+      <div className="text-center max-w-3xl animate-fade-in-up relative z-10">
         {/* Creative Hook Elements */}
         <div className="mb-8 relative">
+          {/* Floating mystical symbols */}
           <div className="absolute -top-8 -left-8 text-white opacity-30 animate-float text-2xl">✦</div>
           <div className="absolute -top-12 -right-6 text-white opacity-25 animate-float text-xl" style={{ animationDelay: '1s' }}>◊</div>
           <div className="absolute -bottom-4 -left-12 text-white opacity-20 animate-float text-lg" style={{ animationDelay: '2s' }}>※</div>
         </div>
 
         {/* Main Title with Premium Icon */}
-        <div className="flex items-center mb-4">
+        <div className="flex items-center justify-center mb-4">
           <Star className="text-white mr-3 opacity-80" size={24} />
           <h1 
             className="font-cinzel font-bold text-4xl md:text-5xl text-white relative"
@@ -111,8 +110,9 @@ const HeroSection = () => {
             }}
           >
             Pookie
+            {/* Underline glow effect */}
             <div 
-              className="absolute bottom-0 left-0 w-3/4 h-px opacity-60"
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-px opacity-60"
               style={{
                 background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
                 boxShadow: '0 0 8px rgba(255,255,255,0.4)'
@@ -124,7 +124,7 @@ const HeroSection = () => {
 
         {/* Subheading */}
         <p 
-          className="font-inter text-base md:text-lg text-gray-300 mb-8 max-w-xl leading-relaxed"
+          className="font-inter text-base md:text-lg text-gray-300 mb-8 max-w-xl mx-auto leading-relaxed"
           style={{
             textShadow: '0 0 8px rgba(255,255,255,0.2)'
           }}
@@ -132,7 +132,7 @@ const HeroSection = () => {
           Unveil a darkly aesthetic wardrobe, curated for the bold and beautiful souls who dance with darkness.
         </p>
 
-        {/* CTA Button */}
+        {/* CTA Button with enhanced styling and icon */}
         <Link to="/shop">
           <Button 
             className="bg-transparent border-2 border-white text-white font-inter font-medium px-8 py-3 text-base hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] backdrop-blur-sm relative group"
@@ -142,6 +142,7 @@ const HeroSection = () => {
           >
             <Sparkles className="mr-2" size={18} />
             <span className="relative z-10">Shop the Darkness</span>
+            {/* Button glow effect on hover */}
             <div className="absolute inset-0 rounded border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                  style={{
                    boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
@@ -149,25 +150,6 @@ const HeroSection = () => {
             />
           </Button>
         </Link>
-      </div>
-
-      {/* Right Spline Object with fade effect */}
-      <div className="flex-1 max-w-lg h-96 relative z-10">
-        <div className="relative w-full h-full">
-          <Spline 
-            scene="https://prod.spline.design/xX9IL1GGpJ1APNIl/scene.splinecode"
-            style={{ width: '100%', height: '100%' }}
-            onLoad={() => console.log('Spline scene loaded successfully')}
-            onError={(error) => console.error('Spline loading error:', error)}
-          />
-          {/* Fade overlay for bottom-right corner */}
-          <div 
-            className="absolute bottom-0 right-0 w-32 h-32 pointer-events-none"
-            style={{
-              background: 'radial-gradient(circle at bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, transparent 70%)'
-            }}
-          />
-        </div>
       </div>
     </section>
   );
