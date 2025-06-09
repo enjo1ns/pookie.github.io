@@ -157,6 +157,8 @@ const HeroSection = () => {
           <Spline 
             scene="https://prod.spline.design/xX9IL1GGpJ1APNIl/scene.splinecode"
             style={{ width: '100%', height: '100%' }}
+            onLoad={() => console.log('Spline scene loaded successfully')}
+            onError={(error) => console.error('Spline loading error:', error)}
           />
           {/* Fade overlay for bottom-right corner */}
           <div 
