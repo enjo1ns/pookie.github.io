@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -47,33 +46,33 @@ const FeaturedClothing = () => {
     switch (theme) {
       case "purple":
         return {
-          primary: "rgba(147, 51, 234, 0.15)",
-          secondary: "rgba(147, 51, 234, 0.05)",
-          glow: "rgba(147, 51, 234, 0.2)"
+          primary: "rgba(147, 51, 234, 0.08)",
+          secondary: "rgba(147, 51, 234, 0.03)",
+          glow: "rgba(147, 51, 234, 0.12)"
         };
       case "blue":
         return {
-          primary: "rgba(59, 130, 246, 0.15)",
-          secondary: "rgba(59, 130, 246, 0.05)",
-          glow: "rgba(59, 130, 246, 0.2)"
+          primary: "rgba(59, 130, 246, 0.08)",
+          secondary: "rgba(59, 130, 246, 0.03)",
+          glow: "rgba(59, 130, 246, 0.12)"
         };
       case "red":
         return {
-          primary: "rgba(239, 68, 68, 0.15)",
-          secondary: "rgba(239, 68, 68, 0.05)",
-          glow: "rgba(239, 68, 68, 0.2)"
+          primary: "rgba(239, 68, 68, 0.08)",
+          secondary: "rgba(239, 68, 68, 0.03)",
+          glow: "rgba(239, 68, 68, 0.12)"
         };
       case "green":
         return {
-          primary: "rgba(34, 197, 94, 0.15)",
-          secondary: "rgba(34, 197, 94, 0.05)",
-          glow: "rgba(34, 197, 94, 0.2)"
+          primary: "rgba(34, 197, 94, 0.08)",
+          secondary: "rgba(34, 197, 94, 0.03)",
+          glow: "rgba(34, 197, 94, 0.12)"
         };
       default:
         return {
-          primary: "rgba(255, 255, 255, 0.15)",
-          secondary: "rgba(255, 255, 255, 0.05)",
-          glow: "rgba(255, 255, 255, 0.2)"
+          primary: "rgba(255, 255, 255, 0.08)",
+          secondary: "rgba(255, 255, 255, 0.03)",
+          glow: "rgba(255, 255, 255, 0.12)"
         };
     }
   };
@@ -120,11 +119,11 @@ const FeaturedClothing = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative">
-        {/* Section Title with dynamic glow */}
+        {/* Section Title with improved font and subtle glow */}
         <h2 
-          className="font-avenir text-2xl md:text-3xl text-white text-center mb-16 animate-pulse transition-all duration-700"
+          className="font-cinzel text-2xl md:text-3xl text-white text-center mb-16 font-semibold tracking-wider transition-all duration-700"
           style={{
-            textShadow: `0 0 10px ${currentColors.glow}, 0 0 20px ${currentColors.secondary}`
+            textShadow: `0 0 8px ${currentColors.glow}, 0 0 16px ${currentColors.secondary}`
           }}
         >
           FEATURED CLOTHING
@@ -138,7 +137,7 @@ const FeaturedClothing = () => {
               onClick={prevSlide}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-30 rounded-full p-3 text-white hover:bg-opacity-20 transition-all duration-300 hover:scale-110 group"
               style={{
-                boxShadow: `0 4px 15px ${currentColors.secondary}, 0 0 15px ${currentColors.secondary}`,
+                boxShadow: `0 4px 15px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
                 borderColor: currentColors.primary
               }}
             >
@@ -151,7 +150,7 @@ const FeaturedClothing = () => {
               onClick={nextSlide}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-30 rounded-full p-3 text-white hover:bg-opacity-20 transition-all duration-300 hover:scale-110 group"
               style={{
-                boxShadow: `0 4px 15px ${currentColors.secondary}, 0 0 15px ${currentColors.secondary}`,
+                boxShadow: `0 4px 15px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
                 borderColor: currentColors.primary
               }}
             >
@@ -185,16 +184,16 @@ const FeaturedClothing = () => {
                     opacity
                   }}
                 >
-                  {/* Enhanced Product Card with 3D Effects and Dynamic Colors */}
+                  {/* Product Card with fixed height and overflow handling */}
                   <div 
                     className="group relative rounded-lg transition-all duration-500 hover:scale-105 cursor-pointer overflow-hidden transform-gpu"
                     style={{
                       width: '280px',
-                      height: '380px',
+                      height: '420px',
                       backgroundColor: 'rgba(16, 20, 24, 0.8)',
                       border: isActive ? `2px solid ${currentColors.primary}` : '1px solid #2A2F33',
                       boxShadow: isActive 
-                        ? `0 10px 30px ${currentColors.secondary}, 0 0 20px ${currentColors.glow}` 
+                        ? `0 10px 30px ${currentColors.secondary}, 0 0 15px ${currentColors.glow}` 
                         : '0 4px 20px rgba(255,255,255,0.05)'
                     }}
                   >
@@ -205,7 +204,7 @@ const FeaturedClothing = () => {
                         alt={product.name}
                         className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                         style={{
-                          filter: `drop-shadow(0 0 8px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.1)'})`
+                          filter: `drop-shadow(0 0 6px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.1)'})`
                         }}
                       />
                       {/* Enhanced magical shimmer effect with dynamic colors */}
@@ -217,22 +216,22 @@ const FeaturedClothing = () => {
                       ></div>
                     </div>
 
-                    {/* Product Info */}
-                    <div className="p-6 text-center flex flex-col justify-between h-32">
-                      <div>
+                    {/* Product Info with proper spacing */}
+                    <div className="p-6 text-center flex flex-col justify-between h-40">
+                      <div className="flex-1">
                         <h3 
-                          className="font-avenir font-medium text-white text-base mb-2"
+                          className="font-cinzel font-medium text-white text-base mb-2"
                           style={{
                             textShadow: `0 0 3px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.1)'}`
                           }}
                         >
                           {product.name}
                         </h3>
-                        <p className="text-gray-400 font-sf text-sm mb-3">
+                        <p className="text-gray-400 font-inter text-sm mb-3">
                           {product.type}
                         </p>
                         <p 
-                          className="text-white font-avenir font-semibold text-lg mb-4"
+                          className="text-white font-cinzel font-semibold text-lg mb-4"
                           style={{
                             textShadow: `0 0 4px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.15)'}`
                           }}
@@ -241,17 +240,20 @@ const FeaturedClothing = () => {
                         </p>
                       </div>
                       
-                      {/* Add to Cart Button - Only visible on hover */}
-                      <Button 
-                        onClick={() => handleAddToCart(product)}
-                        className="transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2 hover:scale-105 font-sf opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
-                        style={{
-                          boxShadow: `0 2px 8px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
-                          borderColor: isActive ? currentColors.primary : 'rgba(255, 255, 255, 0.3)'
-                        }}
-                      >
-                        Add to Cart
-                      </Button>
+                      {/* Add to Cart Button - Only visible on hover with proper sizing */}
+                      <div className="mt-auto">
+                        <Button 
+                          onClick={() => handleAddToCart(product)}
+                          className="w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2 hover:scale-105 font-inter opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
+                          style={{
+                            boxShadow: `0 2px 8px ${currentColors.secondary}, 0 0 10px ${currentColors.secondary}`,
+                            borderColor: isActive ? currentColors.primary : 'rgba(255, 255, 255, 0.3)',
+                            minHeight: '36px'
+                          }}
+                        >
+                          Add to Cart
+                        </Button>
+                      </div>
                     </div>
 
                     {/* Enhanced Hover Border Glow Effect with Dynamic Colors */}
@@ -261,7 +263,7 @@ const FeaturedClothing = () => {
                       }`}
                       style={{
                         border: `2px solid ${currentColors.primary}`,
-                        boxShadow: `0 0 15px ${currentColors.glow}, inset 0 0 15px ${currentColors.secondary}`
+                        boxShadow: `0 0 12px ${currentColors.glow}, inset 0 0 12px ${currentColors.secondary}`
                       }}
                     />
 
@@ -294,7 +296,7 @@ const FeaturedClothing = () => {
                 }`}
                 style={{
                   backgroundColor: index === currentIndex ? currentColors.primary : undefined,
-                  boxShadow: index === currentIndex ? `0 0 10px ${currentColors.glow}` : 'none'
+                  boxShadow: index === currentIndex ? `0 0 8px ${currentColors.glow}` : 'none'
                 }}
               />
             ))}
