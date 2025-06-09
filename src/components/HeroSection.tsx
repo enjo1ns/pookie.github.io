@@ -1,7 +1,9 @@
+
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Star, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import Spline from '@splinetool/react-spline';
 
 const HeroSection = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -17,18 +19,6 @@ const HeroSection = () => {
     setBatClicked(true);
     setTimeout(() => setBatClicked(false), 1000);
   };
-
-  // Load Spline viewer script
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = 'https://unpkg.com/@splinetool/viewer@1.10.2/build/spline-viewer.js';
-    document.head.appendChild(script);
-    
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
 
   return (
     <section className="min-h-screen flex items-center justify-between px-6 relative overflow-hidden pt-16">
@@ -161,12 +151,21 @@ const HeroSection = () => {
         </Link>
       </div>
 
-      {/* Right Spline Object */}
+      {/* Right Spline Object with fade effect */}
       <div className="flex-1 max-w-lg h-96 relative z-10">
-        <spline-viewer 
-          url="https://prod.spline.design/Hsx6kMmoiLyd0U3M/scene.splinecode"
-          style={{ width: '100%', height: '100%' }}
-        />
+        <div className="relative w-full h-full">
+          <Spline 
+            scene="https://prod.spline.design/xX9IL1GGpJ1APNIl/scene.splinecode"
+            style={{ width: '100%', height: '100%' }}
+          />
+          {/* Fade overlay for bottom-right corner */}
+          <div 
+            className="absolute bottom-0 right-0 w-32 h-32 pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, transparent 70%)'
+            }}
+          />
+        </div>
       </div>
     </section>
   );
