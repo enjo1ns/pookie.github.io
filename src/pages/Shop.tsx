@@ -1,12 +1,13 @@
-
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Shop = () => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
 
   const products = [
@@ -52,6 +53,10 @@ const Shop = () => {
       image: product.image,
       type: product.type
     });
+  };
+
+  const handleProductClick = (productId: number) => {
+    navigate(`/product/${productId}`);
   };
 
   return (
@@ -110,6 +115,7 @@ const Shop = () => {
                   }}
                   onMouseEnter={() => setHoveredProduct(product.id)}
                   onMouseLeave={() => setHoveredProduct(null)}
+                  onClick={() => handleProductClick(product.id)}
                 >
                   <div className="flex h-80">
                     {/* Product Image Side */}
@@ -171,7 +177,10 @@ const Shop = () => {
                         </div>
                         
                         <Button 
-                          onClick={() => handleAddToCart(product)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
                           className="relative px-8 py-3 font-medium text-white border-2 border-white/20 rounded-xl transition-all duration-300 hover:border-white/40 hover:shadow-lg hover:shadow-white/10 group/btn overflow-hidden"
                           style={{
                             background: 'rgba(255, 255, 255, 0.08)',

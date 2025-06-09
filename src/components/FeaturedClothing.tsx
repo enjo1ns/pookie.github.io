@@ -2,9 +2,11 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "../contexts/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedClothing = () => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const products = [
@@ -98,6 +100,10 @@ const FeaturedClothing = () => {
     addToCart(product);
   };
 
+  const handleProductClick = (productId: number) => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
     <section className="py-20 px-6 relative">
       {/* Enhanced magical particles background with dynamic colors */}
@@ -160,7 +166,7 @@ const FeaturedClothing = () => {
           )}
 
           {/* 3D Products Display - Fixed height to prevent button cutoff */}
-          <div className="relative h-[450px] flex items-center justify-center">
+          <div className="relative h-[500px] flex items-center justify-center">
             {products.map((product, index) => {
               const isActive = index === currentIndex;
               const distance = Math.abs(index - currentIndex);
@@ -177,20 +183,21 @@ const FeaturedClothing = () => {
               return (
                 <div
                   key={product.id}
-                  className="absolute transition-all duration-700 ease-out"
+                  className="absolute transition-all duration-700 ease-out cursor-pointer"
                   style={{
                     transform: `translateX(${translateX}px) scale(${scale})`,
                     zIndex,
                     filter: `blur(${blur}px)`,
                     opacity
                   }}
+                  onClick={() => handleProductClick(product.id)}
                 >
                   {/* Enhanced Product Card with better button layout - Increased height */}
                   <div 
-                    className="group relative rounded-lg transition-all duration-500 hover:scale-105 cursor-pointer overflow-hidden transform-gpu"
+                    className="group relative rounded-lg transition-all duration-500 hover:scale-105 transform-gpu overflow-hidden"
                     style={{
                       width: '280px',
-                      height: '430px',
+                      height: '480px',
                       backgroundColor: 'rgba(16, 20, 24, 0.8)',
                       border: isActive ? `2px solid ${currentColors.primary}` : '1px solid #2A2F33',
                       boxShadow: isActive 
@@ -218,7 +225,7 @@ const FeaturedClothing = () => {
                     </div>
 
                     {/* Product Info with improved layout - Increased height for button space */}
-                    <div className="p-6 flex flex-col justify-between h-44">
+                    <div className="p-6 flex flex-col justify-between h-60">
                       <div className="text-center">
                         <h3 
                           className="font-cinzel font-medium text-white text-lg mb-2"
@@ -242,10 +249,13 @@ const FeaturedClothing = () => {
                       </div>
                       
                       {/* Fixed Add to Cart Button with proper spacing */}
-                      <div className="w-full mt-4">
+                      <div className="w-full mt-6">
                         <Button 
-                          onClick={() => handleAddToCart(product)}
-                          className="w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2.5 hover:scale-105 font-inter opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
+                          className="w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-3 hover:scale-105 font-inter opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
                           style={{
                             boxShadow: `0 2px 8px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
                             borderColor: isActive ? currentColors.primary : 'rgba(255, 255, 255, 0.3)'
