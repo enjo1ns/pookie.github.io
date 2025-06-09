@@ -7,11 +7,20 @@ import { Link } from "react-router-dom";
 const HeroSection = () => {
   const [scrollY, setScrollY] = useState(0);
   const [batClicked, setBatClicked] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const handleBatClick = () => {
@@ -20,7 +29,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden pt-16">
+    <section className="min-h-screen flex items-center px-6 relative overflow-hidden pt-16">
       {/* Interactive Corner Bat */}
       <div className="absolute top-4 right-4 z-20">
         <img 
@@ -91,65 +100,134 @@ const HeroSection = () => {
         />
       </div>
 
-      <div className="text-center max-w-3xl animate-fade-in-up relative z-10">
-        {/* Creative Hook Elements */}
-        <div className="mb-8 relative">
-          {/* Floating mystical symbols */}
-          <div className="absolute -top-8 -left-8 text-white opacity-30 animate-float text-2xl">✦</div>
-          <div className="absolute -top-12 -right-6 text-white opacity-25 animate-float text-xl" style={{ animationDelay: '1s' }}>◊</div>
-          <div className="absolute -bottom-4 -left-12 text-white opacity-20 animate-float text-lg" style={{ animationDelay: '2s' }}>※</div>
-        </div>
+      {/* Left Content Container */}
+      <div className="max-w-6xl mx-auto flex items-center justify-between w-full">
+        <div className="text-left max-w-2xl animate-fade-in-up relative z-10">
+          {/* Creative Hook Elements */}
+          <div className="mb-8 relative">
+            {/* Floating mystical symbols */}
+            <div className="absolute -top-8 -left-8 text-white opacity-30 animate-float text-2xl">✦</div>
+            <div className="absolute -top-12 -right-6 text-white opacity-25 animate-float text-xl" style={{ animationDelay: '1s' }}>◊</div>
+            <div className="absolute -bottom-4 -left-12 text-white opacity-20 animate-float text-lg" style={{ animationDelay: '2s' }}>※</div>
+          </div>
 
-        {/* Main Title with Premium Icon */}
-        <div className="flex items-center justify-center mb-4">
-          <Star className="text-white mr-3 opacity-80" size={24} />
-          <h1 
-            className="font-cinzel font-bold text-4xl md:text-5xl text-white relative"
+          {/* Main Title with Premium Icon */}
+          <div className="flex items-center mb-4">
+            <Star className="text-white mr-3 opacity-80" size={24} />
+            <h1 
+              className="font-cinzel font-bold text-4xl md:text-5xl text-white relative"
+              style={{
+                textShadow: '0 0 10px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2)'
+              }}
+            >
+              Pookie
+              {/* Underline glow effect */}
+              <div 
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-px opacity-60"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
+                  boxShadow: '0 0 8px rgba(255,255,255,0.4)'
+                }}
+              />
+            </h1>
+            <Star className="text-white ml-3 opacity-80" size={24} />
+          </div>
+
+          {/* Subheading */}
+          <p 
+            className="font-inter text-base md:text-lg text-gray-300 mb-8 max-w-xl leading-relaxed"
             style={{
-              textShadow: '0 0 10px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2)'
+              textShadow: '0 0 8px rgba(255,255,255,0.2)'
             }}
           >
-            Pookie
-            {/* Underline glow effect */}
-            <div 
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-px opacity-60"
+            Unveil a darkly aesthetic wardrobe, curated for the bold and beautiful souls who dance with darkness.
+          </p>
+
+          {/* CTA Button with enhanced styling and icon */}
+          <Link to="/shop">
+            <Button 
+              className="bg-transparent border-2 border-white text-white font-inter font-medium px-8 py-3 text-base hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] backdrop-blur-sm relative group"
               style={{
-                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
-                boxShadow: '0 0 8px rgba(255,255,255,0.4)'
+                boxShadow: '0 0 10px rgba(255,255,255,0.2)'
+              }}
+            >
+              <Sparkles className="mr-2" size={18} />
+              <span className="relative z-10">Shop the Darkness</span>
+              {/* Button glow effect on hover */}
+              <div className="absolute inset-0 rounded border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                   style={{
+                     boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
+                   }}
+              />
+            </Button>
+          </Link>
+        </div>
+
+        {/* Interactive Moon with Particles on Right */}
+        <div className="hidden lg:block relative">
+          <div className="relative w-80 h-80">
+            {/* Main Moon */}
+            <div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full transition-all duration-300 ease-out cursor-pointer"
+              style={{
+                background: 'radial-gradient(circle at 30% 30%, #f8f9fa, #e9ecef, #6c757d)',
+                boxShadow: '0 0 30px rgba(255,255,255,0.3), inset -10px -10px 20px rgba(0,0,0,0.3)',
+                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.02}px, ${(mousePosition.y - window.innerHeight/2) * 0.02}px)`
+              }}
+            >
+              {/* Moon craters */}
+              <div className="absolute top-6 left-8 w-3 h-3 rounded-full bg-gray-400 opacity-40"></div>
+              <div className="absolute top-12 right-6 w-2 h-2 rounded-full bg-gray-500 opacity-30"></div>
+              <div className="absolute bottom-8 left-6 w-4 h-4 rounded-full bg-gray-400 opacity-25"></div>
+            </div>
+
+            {/* Orbiting Particles */}
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 rounded-full opacity-60 animate-pulse"
+                style={{
+                  background: 'radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0.3))',
+                  top: '50%',
+                  left: '50%',
+                  transform: `
+                    translate(-50%, -50%) 
+                    rotate(${i * 45 + (mousePosition.x + mousePosition.y) * 0.1}deg) 
+                    translateX(${80 + Math.sin(Date.now() * 0.001 + i) * 20}px)
+                  `,
+                  animationDelay: `${i * 0.2}s`,
+                  filter: 'blur(0.5px)'
+                }}
+              />
+            ))}
+
+            {/* Floating Dust Particles */}
+            {[...Array(12)].map((_, i) => (
+              <div
+                key={`dust-${i}`}
+                className="absolute w-1 h-1 rounded-full opacity-40"
+                style={{
+                  background: 'rgba(255,255,255,0.6)',
+                  top: `${20 + i * 5}%`,
+                  left: `${15 + (i % 3) * 25}%`,
+                  transform: `translate(${Math.sin(Date.now() * 0.002 + i) * 10}px, ${Math.cos(Date.now() * 0.0015 + i) * 15}px)`,
+                  animation: `float ${3 + i * 0.5}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.3}s`
+                }}
+              />
+            ))}
+
+            {/* Glow Effect */}
+            <div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full pointer-events-none opacity-30"
+              style={{
+                background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
+                filter: 'blur(15px)',
+                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.015}px, ${(mousePosition.y - window.innerHeight/2) * 0.015}px)`
               }}
             />
-          </h1>
-          <Star className="text-white ml-3 opacity-80" size={24} />
+          </div>
         </div>
-
-        {/* Subheading */}
-        <p 
-          className="font-inter text-base md:text-lg text-gray-300 mb-8 max-w-xl mx-auto leading-relaxed"
-          style={{
-            textShadow: '0 0 8px rgba(255,255,255,0.2)'
-          }}
-        >
-          Unveil a darkly aesthetic wardrobe, curated for the bold and beautiful souls who dance with darkness.
-        </p>
-
-        {/* CTA Button with enhanced styling and icon */}
-        <Link to="/shop">
-          <Button 
-            className="bg-transparent border-2 border-white text-white font-inter font-medium px-8 py-3 text-base hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] backdrop-blur-sm relative group"
-            style={{
-              boxShadow: '0 0 10px rgba(255,255,255,0.2)'
-            }}
-          >
-            <Sparkles className="mr-2" size={18} />
-            <span className="relative z-10">Shop the Darkness</span>
-            {/* Button glow effect on hover */}
-            <div className="absolute inset-0 rounded border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                 style={{
-                   boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
-                 }}
-            />
-          </Button>
-        </Link>
       </div>
     </section>
   );

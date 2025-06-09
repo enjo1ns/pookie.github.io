@@ -120,11 +120,12 @@ const FeaturedClothing = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative">
-        {/* Section Title with dynamic glow */}
+        {/* Section Title with improved font and styling */}
         <h2 
-          className="font-avenir text-2xl md:text-3xl text-white text-center mb-16 animate-pulse transition-all duration-700"
+          className="font-cinzel text-3xl md:text-4xl lg:text-5xl text-white text-center mb-16 font-bold tracking-wider transition-all duration-700"
           style={{
-            textShadow: `0 0 10px ${currentColors.glow}, 0 0 20px ${currentColors.secondary}`
+            textShadow: `0 0 15px ${currentColors.glow}, 0 0 30px ${currentColors.secondary}, 0 0 45px rgba(255,255,255,0.1)`,
+            letterSpacing: '0.1em'
           }}
         >
           FEATURED CLOTHING
@@ -160,7 +161,7 @@ const FeaturedClothing = () => {
           )}
 
           {/* 3D Products Display */}
-          <div className="relative h-96 flex items-center justify-center">
+          <div className="relative h-[420px] flex items-center justify-center">
             {products.map((product, index) => {
               const isActive = index === currentIndex;
               const distance = Math.abs(index - currentIndex);
@@ -185,12 +186,12 @@ const FeaturedClothing = () => {
                     opacity
                   }}
                 >
-                  {/* Enhanced Product Card with 3D Effects and Dynamic Colors */}
+                  {/* Enhanced Product Card with better button layout */}
                   <div 
                     className="group relative rounded-lg transition-all duration-500 hover:scale-105 cursor-pointer overflow-hidden transform-gpu"
                     style={{
                       width: '280px',
-                      height: '380px',
+                      height: '400px',
                       backgroundColor: 'rgba(16, 20, 24, 0.8)',
                       border: isActive ? `2px solid ${currentColors.primary}` : '1px solid #2A2F33',
                       boxShadow: isActive 
@@ -217,22 +218,22 @@ const FeaturedClothing = () => {
                       ></div>
                     </div>
 
-                    {/* Product Info */}
-                    <div className="p-6 text-center flex flex-col justify-between h-32">
-                      <div>
+                    {/* Product Info with improved layout */}
+                    <div className="p-6 flex flex-col justify-between h-36">
+                      <div className="text-center">
                         <h3 
-                          className="font-avenir font-medium text-white text-base mb-2"
+                          className="font-cinzel font-medium text-white text-lg mb-2"
                           style={{
                             textShadow: `0 0 3px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.1)'}`
                           }}
                         >
                           {product.name}
                         </h3>
-                        <p className="text-gray-400 font-sf text-sm mb-3">
+                        <p className="text-gray-400 font-inter text-sm mb-3">
                           {product.type}
                         </p>
                         <p 
-                          className="text-white font-avenir font-semibold text-lg mb-4"
+                          className="text-white font-cinzel font-semibold text-xl mb-4"
                           style={{
                             textShadow: `0 0 4px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.15)'}`
                           }}
@@ -241,17 +242,19 @@ const FeaturedClothing = () => {
                         </p>
                       </div>
                       
-                      {/* Add to Cart Button - Only visible on hover */}
-                      <Button 
-                        onClick={() => handleAddToCart(product)}
-                        className="transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2 hover:scale-105 font-sf opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
-                        style={{
-                          boxShadow: `0 2px 8px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
-                          borderColor: isActive ? currentColors.primary : 'rgba(255, 255, 255, 0.3)'
-                        }}
-                      >
-                        Add to Cart
-                      </Button>
+                      {/* Fixed Add to Cart Button */}
+                      <div className="w-full">
+                        <Button 
+                          onClick={() => handleAddToCart(product)}
+                          className="w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2.5 hover:scale-105 font-inter opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
+                          style={{
+                            boxShadow: `0 2px 8px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
+                            borderColor: isActive ? currentColors.primary : 'rgba(255, 255, 255, 0.3)'
+                          }}
+                        >
+                          Add to Cart
+                        </Button>
+                      </div>
                     </div>
 
                     {/* Enhanced Hover Border Glow Effect with Dynamic Colors */}
