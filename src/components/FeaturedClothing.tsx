@@ -166,8 +166,8 @@ const FeaturedClothing = () => {
             </button>
           )}
 
-          {/* 3D Products Display - Fixed height to prevent button cutoff */}
-          <div className="relative h-[420px] flex items-center justify-center">
+          {/* 3D Products Display - Compact height with proper spacing */}
+          <div className="relative h-[380px] flex items-center justify-center">
             {products.map((product, index) => {
               const isActive = index === currentIndex;
               const distance = Math.abs(index - currentIndex);
@@ -193,12 +193,12 @@ const FeaturedClothing = () => {
                   }}
                   onClick={() => handleProductClick(product.id)}
                 >
-                  {/* Enhanced Product Card with better hover layout */}
+                  {/* Enhanced Product Card with compact design */}
                   <div 
                     className="group relative rounded-lg transition-all duration-500 transform-gpu overflow-hidden"
                     style={{
                       width: '280px',
-                      height: '400px',
+                      height: '360px',
                       backgroundColor: 'rgba(16, 20, 24, 0.8)',
                       border: isActive ? `2px solid ${currentColors.primary}` : '1px solid #2A2F33',
                       boxShadow: isActive 
@@ -207,7 +207,7 @@ const FeaturedClothing = () => {
                     }}
                   >
                     {/* Product Image */}
-                    <div className="w-full h-56 overflow-hidden flex items-center justify-center p-4 relative">
+                    <div className="w-full h-48 overflow-hidden flex items-center justify-center p-4 relative">
                       <img 
                         src={product.image} 
                         alt={product.name}
@@ -225,22 +225,22 @@ const FeaturedClothing = () => {
                       ></div>
                     </div>
 
-                    {/* Product Info - Improved layout with fixed spacing */}
-                    <div className="p-6 h-36 flex flex-col">
-                      <div className="text-center flex-1">
+                    {/* Product Info - Compact layout with proper spacing */}
+                    <div className="px-6 py-4 h-28 flex flex-col justify-between">
+                      <div className="text-center">
                         <h3 
-                          className="font-cinzel font-medium text-white text-lg mb-2"
+                          className="font-cinzel font-medium text-white text-lg mb-1"
                           style={{
                             textShadow: `0 0 3px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.1)'}`
                           }}
                         >
                           {product.name}
                         </h3>
-                        <p className="text-gray-400 font-inter text-sm mb-3">
+                        <p className="text-gray-400 font-inter text-sm mb-2">
                           {product.type}
                         </p>
                         <p 
-                          className="text-white font-cinzel font-semibold text-xl mb-4"
+                          className="text-white font-cinzel font-semibold text-xl"
                           style={{
                             textShadow: `0 0 4px ${isActive ? currentColors.glow : 'rgba(255,255,255,0.15)'}`
                           }}
@@ -248,15 +248,17 @@ const FeaturedClothing = () => {
                           ${product.price}
                         </p>
                       </div>
-                      
-                      {/* Improved Add to Cart Button - Only shows on hover with smooth animation */}
-                      <div className="w-full">
+                    </div>
+                    
+                    {/* Hover expansion area for Add to Cart Button */}
+                    <div className="absolute bottom-0 left-0 right-0 h-0 group-hover:h-16 transition-all duration-500 ease-out overflow-hidden bg-gradient-to-t from-black/80 to-transparent">
+                      <div className="p-4 pt-2">
                         <Button 
                           onClick={(e) => {
                             e.stopPropagation();
                             handleAddToCart(product);
                           }}
-                          className="w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-3 hover:scale-105 font-inter opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0"
+                          className="w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2 hover:scale-105 font-inter opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0"
                           style={{
                             boxShadow: `0 2px 8px ${currentColors.secondary}, 0 0 12px ${currentColors.secondary}`,
                             borderColor: isActive ? currentColors.primary : 'rgba(255, 255, 255, 0.3)'
@@ -295,7 +297,7 @@ const FeaturedClothing = () => {
           </div>
 
           {/* Enhanced Dots Indicator with Dynamic Colors */}
-          <div className="flex justify-center mt-12 space-x-3">
+          <div className="flex justify-center mt-8 space-x-3">
             {products.map((_, index) => (
               <button
                 key={index}

@@ -165,7 +165,7 @@ const HeroSection = () => {
 
         {/* Enhanced Interactive Moon with better design */}
         <div className="hidden lg:block relative">
-          <div className="relative w-80 h-80">
+          <div className="relative w-96 h-96 overflow-visible">
             {/* Main Moon with enhanced styling */}
             <div 
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full transition-all duration-700 ease-out cursor-pointer"
@@ -189,7 +189,7 @@ const HeroSection = () => {
                 `,
                 transform: `
                   translate(-50%, -50%) 
-                  translate(${(mousePosition.x - window.innerWidth/2) * 0.004}px, ${(mousePosition.y - window.innerHeight/2) * 0.004}px)
+                  translate(${(mousePosition.x - window.innerWidth/2) * 0.001}px, ${(mousePosition.y - window.innerHeight/2) * 0.001}px)
                 `,
                 filter: 'blur(0.2px)'
               }}
@@ -202,53 +202,73 @@ const HeroSection = () => {
               <div className="absolute top-12 left-16 w-2 h-2 rounded-full bg-gray-300 opacity-50 shadow-inner"></div>
             </div>
 
-            {/* Orbiting Particles with enhanced movement */}
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-2 h-2 rounded-full opacity-70"
-                style={{
-                  background: `radial-gradient(circle, 
-                    rgba(255,255,255,0.9) 0%, 
-                    rgba(255,255,255,0.6) 50%, 
-                    rgba(255,255,255,0.2) 100%
-                  )`,
-                  top: '50%',
-                  left: '50%',
-                  transform: `
-                    translate(-50%, -50%) 
-                    rotate(${i * 30 + (mousePosition.x + mousePosition.y) * 0.015}deg) 
-                    translateX(${90 + Math.sin(Date.now() * 0.0008 + i) * 15}px)
-                  `,
-                  animationDelay: `${i * 0.15}s`,
-                  filter: 'blur(0.3px)',
-                  transition: 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  boxShadow: '0 0 6px rgba(255,255,255,0.6)'
-                }}
-              />
-            ))}
+            {/* Random Orbiting Particles - Now with better distribution and no boundaries */}
+            {[...Array(16)].map((_, i) => {
+              const angle = (i * 22.5) + Math.sin(Date.now() * 0.0005 + i) * 15;
+              const radius = 90 + Math.sin(Date.now() * 0.0008 + i * 1.5) * 25;
+              const size = 1.5 + Math.sin(Date.now() * 0.001 + i * 2) * 0.5;
+              
+              return (
+                <div
+                  key={i}
+                  className="absolute rounded-full opacity-70"
+                  style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    background: `radial-gradient(circle, 
+                      rgba(255,255,255,0.9) 0%, 
+                      rgba(255,255,255,0.6) 50%, 
+                      rgba(255,255,255,0.2) 100%
+                    )`,
+                    top: '50%',
+                    left: '50%',
+                    transform: `
+                      translate(-50%, -50%) 
+                      rotate(${angle + (mousePosition.x + mousePosition.y) * 0.008}deg) 
+                      translateX(${radius}px)
+                    `,
+                    filter: 'blur(0.3px)',
+                    transition: 'transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    boxShadow: '0 0 6px rgba(255,255,255,0.6)'
+                  }}
+                />
+              );
+            })}
 
-            {/* Enhanced floating dust particles */}
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={`dust-${i}`}
-                className="absolute w-1 h-1 rounded-full opacity-50"
-                style={{
-                  background: 'rgba(255,255,255,0.8)',
-                  top: `${15 + i * 3.5}%`,
-                  left: `${10 + (i % 4) * 20}%`,
-                  transform: `translate(${Math.sin(Date.now() * 0.0015 + i) * 8}px, ${Math.cos(Date.now() * 0.001 + i) * 12}px)`,
-                  animation: `float ${4 + i * 0.3}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.2}s`,
-                  filter: 'blur(0.3px)',
-                  boxShadow: '0 0 3px rgba(255,255,255,0.5)'
-                }}
-              />
-            ))}
+            {/* Enhanced floating dust particles - Random distribution */}
+            {[...Array(25)].map((_, i) => {
+              const randomX = -50 + Math.random() * 200;
+              const randomY = -50 + Math.random() * 200;
+              const randomSize = 0.5 + Math.random() * 1;
+              const randomOpacity = 0.3 + Math.random() * 0.4;
+              
+              return (
+                <div
+                  key={`dust-${i}`}
+                  className="absolute rounded-full"
+                  style={{
+                    width: `${randomSize}px`,
+                    height: `${randomSize}px`,
+                    background: 'rgba(255,255,255,0.8)',
+                    top: '50%',
+                    left: '50%',
+                    opacity: randomOpacity,
+                    transform: `
+                      translate(-50%, -50%) 
+                      translate(${randomX + Math.sin(Date.now() * 0.0012 + i) * 12}px, ${randomY + Math.cos(Date.now() * 0.0008 + i) * 15}px)
+                    `,
+                    animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
+                    animationDelay: `${Math.random() * 3}s`,
+                    filter: 'blur(0.3px)',
+                    boxShadow: '0 0 3px rgba(255,255,255,0.5)'
+                  }}
+                />
+              );
+            })}
 
             {/* Enhanced primary glow effect */}
             <div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full pointer-events-none opacity-25"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full pointer-events-none opacity-25"
               style={{
                 background: `radial-gradient(circle, 
                   rgba(255,255,255,0.2) 0%, 
@@ -259,9 +279,9 @@ const HeroSection = () => {
                 filter: 'blur(25px)',
                 transform: `
                   translate(-50%, -50%) 
-                  translate(${(mousePosition.x - window.innerWidth/2) * 0.003}px, ${(mousePosition.y - window.innerHeight/2) * 0.003}px)
+                  translate(${(mousePosition.x - window.innerWidth/2) * 0.0008}px, ${(mousePosition.y - window.innerHeight/2) * 0.0008}px)
                 `,
-                transition: 'transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                transition: 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
               }}
             />
 
@@ -277,26 +297,9 @@ const HeroSection = () => {
                 filter: 'blur(40px)',
                 transform: `
                   translate(-50%, -50%) 
-                  translate(${(mousePosition.x - window.innerWidth/2) * 0.002}px, ${(mousePosition.y - window.innerHeight/2) * 0.002}px)
+                  translate(${(mousePosition.x - window.innerWidth/2) * 0.0005}px, ${(mousePosition.y - window.innerHeight/2) * 0.0005}px)
                 `,
-                transition: 'transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-              }}
-            />
-
-            {/* Tertiary ultra-soft glow for maximum feathering */}
-            <div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none opacity-8"
-              style={{
-                background: `radial-gradient(circle, 
-                  rgba(255,255,255,0.08) 0%, 
-                  transparent 70%
-                )`,
-                filter: 'blur(60px)',
-                transform: `
-                  translate(-50%, -50%) 
-                  translate(${(mousePosition.x - window.innerWidth/2) * 0.001}px, ${(mousePosition.y - window.innerHeight/2) * 0.001}px)
-                `,
-                transition: 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                transition: 'transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
               }}
             />
           </div>
