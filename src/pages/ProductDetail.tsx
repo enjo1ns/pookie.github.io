@@ -54,9 +54,7 @@ const ProductDetail = () => {
       name: product.name,
       price: product.price,
       image: product.image,
-      type: product.type,
-      size: selectedSize,
-      quantity
+      type: product.type
     });
   };
 
@@ -74,17 +72,17 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Animated Background */}
+      {/* Fixed Background with better styling */}
       <div 
         className="fixed inset-0 z-0"
         style={{
-          backgroundImage: `url('/lovable-uploads/79e337f6-b626-44f1-b37a-49f67d3c5675.png')`,
+          backgroundImage: `url('/lovable-uploads/1e59507b-2801-4e90-a159-a7141b184c62.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-70" />
+        <div className="absolute inset-0 bg-black bg-opacity-80" />
       </div>
 
       {/* Floating particles */}
@@ -335,7 +333,7 @@ const ProductDetail = () => {
         <Footer />
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes slide-in-right {
           from {
             opacity: 0;

@@ -163,82 +163,140 @@ const HeroSection = () => {
           </Link>
         </div>
 
-        {/* Interactive Moon with Particles on Right - Improved with smoother edges and reduced sensitivity */}
+        {/* Enhanced Interactive Moon with better design */}
         <div className="hidden lg:block relative">
           <div className="relative w-80 h-80">
-            {/* Main Moon with feathered edges */}
+            {/* Main Moon with enhanced styling */}
             <div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full transition-all duration-500 ease-out cursor-pointer"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full transition-all duration-700 ease-out cursor-pointer"
               style={{
-                background: 'radial-gradient(circle at 30% 30%, #f8f9fa, #e9ecef, #6c757d)',
-                boxShadow: '0 0 30px rgba(255,255,255,0.3), inset -10px -10px 20px rgba(0,0,0,0.3), 0 0 60px rgba(255,255,255,0.1)',
-                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.008}px, ${(mousePosition.y - window.innerHeight/2) * 0.008}px)`,
-                filter: 'blur(0.5px)'
+                background: `
+                  radial-gradient(circle at 35% 25%, 
+                    rgba(255, 255, 255, 0.95) 0%, 
+                    rgba(240, 240, 245, 0.9) 20%,
+                    rgba(220, 220, 230, 0.85) 40%,
+                    rgba(200, 200, 215, 0.8) 60%,
+                    rgba(180, 180, 200, 0.75) 80%,
+                    rgba(160, 160, 185, 0.7) 100%
+                  )
+                `,
+                boxShadow: `
+                  0 0 40px rgba(255,255,255,0.4),
+                  0 0 80px rgba(255,255,255,0.2),
+                  0 0 120px rgba(255,255,255,0.1),
+                  inset -15px -15px 30px rgba(0,0,0,0.2),
+                  inset 5px 5px 20px rgba(255,255,255,0.3)
+                `,
+                transform: `
+                  translate(-50%, -50%) 
+                  translate(${(mousePosition.x - window.innerWidth/2) * 0.004}px, ${(mousePosition.y - window.innerHeight/2) * 0.004}px)
+                `,
+                filter: 'blur(0.2px)'
               }}
             >
-              {/* Moon craters */}
-              <div className="absolute top-6 left-8 w-3 h-3 rounded-full bg-gray-400 opacity-40"></div>
-              <div className="absolute top-12 right-6 w-2 h-2 rounded-full bg-gray-500 opacity-30"></div>
-              <div className="absolute bottom-8 left-6 w-4 h-4 rounded-full bg-gray-400 opacity-25"></div>
+              {/* Enhanced Moon surface details */}
+              <div className="absolute top-8 left-10 w-4 h-4 rounded-full bg-gray-300 opacity-60 shadow-inner"></div>
+              <div className="absolute top-16 right-8 w-3 h-3 rounded-full bg-gray-400 opacity-50 shadow-inner"></div>
+              <div className="absolute bottom-12 left-8 w-5 h-5 rounded-full bg-gray-350 opacity-55 shadow-inner"></div>
+              <div className="absolute bottom-8 right-12 w-2 h-2 rounded-full bg-gray-400 opacity-45 shadow-inner"></div>
+              <div className="absolute top-12 left-16 w-2 h-2 rounded-full bg-gray-300 opacity-50 shadow-inner"></div>
             </div>
 
-            {/* Orbiting Particles with smoother movement */}
-            {[...Array(8)].map((_, i) => (
+            {/* Orbiting Particles with enhanced movement */}
+            {[...Array(12)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-2 h-2 rounded-full opacity-60 animate-pulse"
+                className="absolute w-2 h-2 rounded-full opacity-70"
                 style={{
-                  background: 'radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0.3))',
+                  background: `radial-gradient(circle, 
+                    rgba(255,255,255,0.9) 0%, 
+                    rgba(255,255,255,0.6) 50%, 
+                    rgba(255,255,255,0.2) 100%
+                  )`,
                   top: '50%',
                   left: '50%',
                   transform: `
                     translate(-50%, -50%) 
-                    rotate(${i * 45 + (mousePosition.x + mousePosition.y) * 0.03}deg) 
-                    translateX(${80 + Math.sin(Date.now() * 0.001 + i) * 20}px)
+                    rotate(${i * 30 + (mousePosition.x + mousePosition.y) * 0.015}deg) 
+                    translateX(${90 + Math.sin(Date.now() * 0.0008 + i) * 15}px)
                   `,
-                  animationDelay: `${i * 0.2}s`,
-                  filter: 'blur(0.5px)',
-                  transition: 'transform 0.6s ease-out'
+                  animationDelay: `${i * 0.15}s`,
+                  filter: 'blur(0.3px)',
+                  transition: 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  boxShadow: '0 0 6px rgba(255,255,255,0.6)'
                 }}
               />
             ))}
 
-            {/* Floating Dust Particles with gentler movement */}
-            {[...Array(12)].map((_, i) => (
+            {/* Enhanced floating dust particles */}
+            {[...Array(20)].map((_, i) => (
               <div
                 key={`dust-${i}`}
-                className="absolute w-1 h-1 rounded-full opacity-40"
+                className="absolute w-1 h-1 rounded-full opacity-50"
                 style={{
-                  background: 'rgba(255,255,255,0.6)',
-                  top: `${20 + i * 5}%`,
-                  left: `${15 + (i % 3) * 25}%`,
-                  transform: `translate(${Math.sin(Date.now() * 0.002 + i) * 10}px, ${Math.cos(Date.now() * 0.0015 + i) * 15}px)`,
-                  animation: `float ${3 + i * 0.5}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.3}s`,
-                  filter: 'blur(0.5px)'
+                  background: 'rgba(255,255,255,0.8)',
+                  top: `${15 + i * 3.5}%`,
+                  left: `${10 + (i % 4) * 20}%`,
+                  transform: `translate(${Math.sin(Date.now() * 0.0015 + i) * 8}px, ${Math.cos(Date.now() * 0.001 + i) * 12}px)`,
+                  animation: `float ${4 + i * 0.3}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.2}s`,
+                  filter: 'blur(0.3px)',
+                  boxShadow: '0 0 3px rgba(255,255,255,0.5)'
                 }}
               />
             ))}
 
-            {/* Enhanced Glow Effect with feathered edges */}
+            {/* Enhanced primary glow effect */}
             <div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full pointer-events-none opacity-20"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full pointer-events-none opacity-25"
               style={{
-                background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, transparent 80%)',
-                filter: 'blur(20px)',
-                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.006}px, ${(mousePosition.y - window.innerHeight/2) * 0.006}px)`,
-                transition: 'transform 0.8s ease-out'
+                background: `radial-gradient(circle, 
+                  rgba(255,255,255,0.2) 0%, 
+                  rgba(255,255,255,0.1) 30%, 
+                  rgba(255,255,255,0.05) 60%, 
+                  transparent 85%
+                )`,
+                filter: 'blur(25px)',
+                transform: `
+                  translate(-50%, -50%) 
+                  translate(${(mousePosition.x - window.innerWidth/2) * 0.003}px, ${(mousePosition.y - window.innerHeight/2) * 0.003}px)
+                `,
+                transition: 'transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
               }}
             />
 
-            {/* Additional soft outer glow for feathered effect */}
+            {/* Secondary outer glow for enhanced feathering */}
             <div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full pointer-events-none opacity-10"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none opacity-15"
               style={{
-                background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                filter: 'blur(30px)',
-                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.004}px, ${(mousePosition.y - window.innerHeight/2) * 0.004}px)`,
-                transition: 'transform 1s ease-out'
+                background: `radial-gradient(circle, 
+                  rgba(255,255,255,0.1) 0%, 
+                  rgba(255,255,255,0.05) 40%, 
+                  transparent 75%
+                )`,
+                filter: 'blur(40px)',
+                transform: `
+                  translate(-50%, -50%) 
+                  translate(${(mousePosition.x - window.innerWidth/2) * 0.002}px, ${(mousePosition.y - window.innerHeight/2) * 0.002}px)
+                `,
+                transition: 'transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+              }}
+            />
+
+            {/* Tertiary ultra-soft glow for maximum feathering */}
+            <div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none opacity-8"
+              style={{
+                background: `radial-gradient(circle, 
+                  rgba(255,255,255,0.08) 0%, 
+                  transparent 70%
+                )`,
+                filter: 'blur(60px)',
+                transform: `
+                  translate(-50%, -50%) 
+                  translate(${(mousePosition.x - window.innerWidth/2) * 0.001}px, ${(mousePosition.y - window.innerHeight/2) * 0.001}px)
+                `,
+                transition: 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
               }}
             />
           </div>
