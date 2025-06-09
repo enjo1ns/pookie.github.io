@@ -14,28 +14,32 @@ const FeaturedClothing = () => {
       name: "Gothic T-Shirt",
       price: 30,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "T-Shirt"
+      type: "T-Shirt",
+      glowColor: "rgba(138, 43, 226, 0.4)" // Purple
     },
     {
       id: 2,
       name: "Dark Sweatshirt",
       price: 45,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Sweatshirt"
+      type: "Sweatshirt",
+      glowColor: "rgba(75, 0, 130, 0.4)" // Indigo
     },
     {
       id: 3,
       name: "Shadow Hoodie",
       price: 60,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Hoodie"
+      type: "Hoodie",
+      glowColor: "rgba(25, 25, 112, 0.4)" // Midnight Blue
     },
     {
       id: 4,
       name: "White Gothic T-Shirt",
       price: 30,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "T-Shirt"
+      type: "T-Shirt",
+      glowColor: "rgba(72, 61, 139, 0.4)" // Dark Slate Blue
     }
   ];
 
@@ -55,6 +59,8 @@ const FeaturedClothing = () => {
     addToCart(product);
   };
 
+  const currentProduct = products[currentIndex];
+
   return (
     <section className="py-20 px-6 relative">
       {/* Enhanced magical particles background */}
@@ -66,10 +72,19 @@ const FeaturedClothing = () => {
         <div className="absolute bottom-1/4 left-1/5 w-2 h-2 bg-white rounded-full animate-pulse opacity-30"></div>
       </div>
 
+      {/* Dynamic background glow that changes with product */}
+      <div 
+        className="absolute inset-0 transition-all duration-1000 ease-out pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at center, ${currentProduct.glowColor} 0%, transparent 70%)`,
+          filter: 'blur(100px)'
+        }}
+      />
+
       <div className="max-w-7xl mx-auto relative">
         {/* Section Title */}
         <h2 
-          className="font-avenir text-2xl md:text-3xl text-white text-center mb-16 animate-pulse"
+          className="font-avenir font-bold text-2xl md:text-3xl text-white text-center mb-16 animate-pulse"
           style={{
             textShadow: '0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3)'
           }}
@@ -101,7 +116,7 @@ const FeaturedClothing = () => {
           </button>
 
           {/* 3D Products Display */}
-          <div className="relative h-96 flex items-center justify-center">
+          <div className="relative h-[420px] flex items-center justify-center">
             {products.map((product, index) => {
               const isActive = index === currentIndex;
               const distance = Math.abs(index - currentIndex);
@@ -131,11 +146,11 @@ const FeaturedClothing = () => {
                     className="group relative rounded-lg transition-all duration-500 hover:scale-105 cursor-pointer overflow-hidden transform-gpu"
                     style={{
                       width: '280px',
-                      height: '380px',
+                      height: '400px',
                       backgroundColor: 'rgba(16, 20, 24, 0.8)',
                       border: isActive ? '2px solid rgba(255,255,255,0.3)' : '1px solid #2A2F33',
                       boxShadow: isActive 
-                        ? '0 20px 60px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1)' 
+                        ? `0 20px 60px ${product.glowColor}, 0 0 40px ${product.glowColor}` 
                         : '0 4px 20px rgba(255,255,255,0.05)'
                     }}
                   >
@@ -146,15 +161,15 @@ const FeaturedClothing = () => {
                         alt={product.name}
                         className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                         style={{
-                          filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.2))'
+                          filter: `drop-shadow(0 0 15px ${product.glowColor})`
                         }}
                       />
                       {/* Enhanced magical shimmer effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-1000"></div>
                     </div>
 
-                    {/* Product Info */}
-                    <div className="p-6 text-center flex flex-col justify-between h-32">
+                    {/* Product Info with better spacing */}
+                    <div className="p-6 text-center flex flex-col justify-between h-36">
                       <div>
                         <h3 
                           className="font-avenir font-medium text-white text-base mb-2"
@@ -177,14 +192,14 @@ const FeaturedClothing = () => {
                         </p>
                       </div>
                       
-                      {/* Add to Cart Button - Enhanced visibility */}
+                      {/* Add to Cart Button - Always visible for active product */}
                       <Button 
                         onClick={() => handleAddToCart(product)}
-                        className={`transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2 hover:scale-105 font-sf ${
-                          isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                        className={`w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2 hover:scale-105 font-sf ${
+                          isActive ? 'opacity-100' : 'opacity-0'
                         }`}
                         style={{
-                          boxShadow: '0 2px 10px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.1)'
+                          boxShadow: `0 2px 10px ${product.glowColor}, 0 0 20px ${product.glowColor}`
                         }}
                       >
                         Add to Cart
@@ -197,8 +212,8 @@ const FeaturedClothing = () => {
                         isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                       }`}
                       style={{
-                        border: '2px solid rgba(255,255,255,0.6)',
-                        boxShadow: '0 0 30px rgba(255,255,255,0.4), inset 0 0 30px rgba(255,255,255,0.1)'
+                        border: `2px solid ${product.glowColor.replace('0.4', '0.8')}`,
+                        boxShadow: `0 0 30px ${product.glowColor}, inset 0 0 30px ${product.glowColor.replace('0.4', '0.1')}`
                       }}
                     />
 
@@ -214,7 +229,7 @@ const FeaturedClothing = () => {
 
           {/* Enhanced Dots Indicator */}
           <div className="flex justify-center mt-12 space-x-3">
-            {products.map((_, index) => (
+            {products.map((product, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
@@ -224,7 +239,7 @@ const FeaturedClothing = () => {
                     : 'bg-white bg-opacity-30 hover:bg-opacity-50'
                 }`}
                 style={{
-                  boxShadow: index === currentIndex ? '0 0 20px rgba(255,255,255,0.6)' : 'none'
+                  boxShadow: index === currentIndex ? `0 0 20px ${product.glowColor}` : 'none'
                 }}
               />
             ))}
