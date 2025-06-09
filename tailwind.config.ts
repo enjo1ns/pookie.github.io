@@ -70,6 +70,8 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
+				'sf': ['"SF Pro Display"', 'system-ui', 'sans-serif'],
+				'avenir': ['"Avenir Next"', 'system-ui', 'sans-serif'],
 				'cinzel': ['Cinzel', 'serif'],
 				'inter': ['Inter', 'sans-serif'],
 			},

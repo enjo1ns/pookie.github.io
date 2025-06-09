@@ -26,6 +26,10 @@ const Navigation = () => {
     setIsCartOpen(!isCartOpen);
   };
 
+  const closeCart = () => {
+    setIsCartOpen(false);
+  };
+
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -36,7 +40,7 @@ const Navigation = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
               <Star className="text-white animate-pulse" size={20} />
-              <span className="font-cinzel text-xl text-white">pookie</span>
+              <span className="font-avenir text-xl text-white">pookie</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -45,7 +49,7 @@ const Navigation = () => {
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`font-inter text-sm transition-all duration-300 relative group ${
+                  className={`font-sf text-sm transition-all duration-300 relative group ${
                     location.pathname === item.path
                       ? "text-white"
                       : "text-gray-300 hover:text-white"
@@ -73,7 +77,7 @@ const Navigation = () => {
                 <ShoppingCart size={20} className="group-hover:animate-pulse" />
                 {totalItems > 0 && (
                   <span 
-                    className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium animate-pulse"
+                    className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-sf font-medium animate-pulse"
                     style={{
                       boxShadow: '0 0 10px rgba(255,255,255,0.6)'
                     }}
@@ -93,7 +97,7 @@ const Navigation = () => {
                 <ShoppingCart size={20} />
                 {totalItems > 0 && (
                   <span 
-                    className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-4 w-4 flex items-center justify-center font-medium animate-pulse"
+                    className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-4 w-4 flex items-center justify-center font-sf font-medium animate-pulse"
                     style={{
                       boxShadow: '0 0 10px rgba(255,255,255,0.6)'
                     }}
@@ -120,7 +124,7 @@ const Navigation = () => {
                     key={item.name}
                     to={item.path}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`block font-inter text-sm transition-colors duration-300 ${
+                    className={`block font-sf text-sm transition-colors duration-300 ${
                       location.pathname === item.path
                         ? "text-white"
                         : "text-gray-300 hover:text-white"
@@ -136,9 +140,7 @@ const Navigation = () => {
       </nav>
 
       {/* Cart Sidebar */}
-      {isCartOpen && (
-        <CartSidebar />
-      )}
+      <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
     </>
   );
 };
