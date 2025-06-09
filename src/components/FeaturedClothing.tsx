@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -160,8 +159,8 @@ const FeaturedClothing = () => {
             </button>
           )}
 
-          {/* 3D Products Display */}
-          <div className="relative h-[420px] flex items-center justify-center">
+          {/* 3D Products Display - Fixed height to prevent button cutoff */}
+          <div className="relative h-[450px] flex items-center justify-center">
             {products.map((product, index) => {
               const isActive = index === currentIndex;
               const distance = Math.abs(index - currentIndex);
@@ -186,12 +185,12 @@ const FeaturedClothing = () => {
                     opacity
                   }}
                 >
-                  {/* Enhanced Product Card with better button layout */}
+                  {/* Enhanced Product Card with better button layout - Increased height */}
                   <div 
                     className="group relative rounded-lg transition-all duration-500 hover:scale-105 cursor-pointer overflow-hidden transform-gpu"
                     style={{
                       width: '280px',
-                      height: '400px',
+                      height: '430px',
                       backgroundColor: 'rgba(16, 20, 24, 0.8)',
                       border: isActive ? `2px solid ${currentColors.primary}` : '1px solid #2A2F33',
                       boxShadow: isActive 
@@ -218,8 +217,8 @@ const FeaturedClothing = () => {
                       ></div>
                     </div>
 
-                    {/* Product Info with improved layout */}
-                    <div className="p-6 flex flex-col justify-between h-36">
+                    {/* Product Info with improved layout - Increased height for button space */}
+                    <div className="p-6 flex flex-col justify-between h-44">
                       <div className="text-center">
                         <h3 
                           className="font-cinzel font-medium text-white text-lg mb-2"
@@ -242,8 +241,8 @@ const FeaturedClothing = () => {
                         </p>
                       </div>
                       
-                      {/* Fixed Add to Cart Button */}
-                      <div className="w-full">
+                      {/* Fixed Add to Cart Button with proper spacing */}
+                      <div className="w-full mt-4">
                         <Button 
                           onClick={() => handleAddToCart(product)}
                           className="w-full transition-all duration-500 bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black backdrop-blur-sm text-sm py-2.5 hover:scale-105 font-inter opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"

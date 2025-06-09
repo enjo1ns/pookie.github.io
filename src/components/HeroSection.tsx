@@ -163,16 +163,17 @@ const HeroSection = () => {
           </Link>
         </div>
 
-        {/* Interactive Moon with Particles on Right */}
+        {/* Interactive Moon with Particles on Right - Improved with smoother edges and reduced sensitivity */}
         <div className="hidden lg:block relative">
           <div className="relative w-80 h-80">
-            {/* Main Moon */}
+            {/* Main Moon with feathered edges */}
             <div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full transition-all duration-300 ease-out cursor-pointer"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full transition-all duration-500 ease-out cursor-pointer"
               style={{
                 background: 'radial-gradient(circle at 30% 30%, #f8f9fa, #e9ecef, #6c757d)',
-                boxShadow: '0 0 30px rgba(255,255,255,0.3), inset -10px -10px 20px rgba(0,0,0,0.3)',
-                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.02}px, ${(mousePosition.y - window.innerHeight/2) * 0.02}px)`
+                boxShadow: '0 0 30px rgba(255,255,255,0.3), inset -10px -10px 20px rgba(0,0,0,0.3), 0 0 60px rgba(255,255,255,0.1)',
+                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.008}px, ${(mousePosition.y - window.innerHeight/2) * 0.008}px)`,
+                filter: 'blur(0.5px)'
               }}
             >
               {/* Moon craters */}
@@ -181,7 +182,7 @@ const HeroSection = () => {
               <div className="absolute bottom-8 left-6 w-4 h-4 rounded-full bg-gray-400 opacity-25"></div>
             </div>
 
-            {/* Orbiting Particles */}
+            {/* Orbiting Particles with smoother movement */}
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
@@ -192,16 +193,17 @@ const HeroSection = () => {
                   left: '50%',
                   transform: `
                     translate(-50%, -50%) 
-                    rotate(${i * 45 + (mousePosition.x + mousePosition.y) * 0.1}deg) 
+                    rotate(${i * 45 + (mousePosition.x + mousePosition.y) * 0.03}deg) 
                     translateX(${80 + Math.sin(Date.now() * 0.001 + i) * 20}px)
                   `,
                   animationDelay: `${i * 0.2}s`,
-                  filter: 'blur(0.5px)'
+                  filter: 'blur(0.5px)',
+                  transition: 'transform 0.6s ease-out'
                 }}
               />
             ))}
 
-            {/* Floating Dust Particles */}
+            {/* Floating Dust Particles with gentler movement */}
             {[...Array(12)].map((_, i) => (
               <div
                 key={`dust-${i}`}
@@ -212,18 +214,31 @@ const HeroSection = () => {
                   left: `${15 + (i % 3) * 25}%`,
                   transform: `translate(${Math.sin(Date.now() * 0.002 + i) * 10}px, ${Math.cos(Date.now() * 0.0015 + i) * 15}px)`,
                   animation: `float ${3 + i * 0.5}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.3}s`
+                  animationDelay: `${i * 0.3}s`,
+                  filter: 'blur(0.5px)'
                 }}
               />
             ))}
 
-            {/* Glow Effect */}
+            {/* Enhanced Glow Effect with feathered edges */}
             <div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full pointer-events-none opacity-30"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full pointer-events-none opacity-20"
+              style={{
+                background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, transparent 80%)',
+                filter: 'blur(20px)',
+                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.006}px, ${(mousePosition.y - window.innerHeight/2) * 0.006}px)`,
+                transition: 'transform 0.8s ease-out'
+              }}
+            />
+
+            {/* Additional soft outer glow for feathered effect */}
+            <div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full pointer-events-none opacity-10"
               style={{
                 background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                filter: 'blur(15px)',
-                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.015}px, ${(mousePosition.y - window.innerHeight/2) * 0.015}px)`
+                filter: 'blur(30px)',
+                transform: `translate(-50%, -50%) translate(${(mousePosition.x - window.innerWidth/2) * 0.004}px, ${(mousePosition.y - window.innerHeight/2) * 0.004}px)`,
+                transition: 'transform 1s ease-out'
               }}
             />
           </div>
