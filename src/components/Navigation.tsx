@@ -35,7 +35,7 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <Star className="text-white" size={20} />
+              <Star className="text-white animate-pulse" size={20} />
               <span className="font-cinzel text-xl text-white">pookie</span>
             </Link>
 
@@ -68,11 +68,16 @@ const Navigation = () => {
               {/* Cart Button */}
               <button
                 onClick={toggleCart}
-                className="relative text-white hover:text-gray-300 transition-colors duration-300 p-2"
+                className="relative text-white hover:text-gray-300 transition-all duration-300 p-2 hover:scale-110 group"
               >
-                <ShoppingCart size={20} />
+                <ShoppingCart size={20} className="group-hover:animate-pulse" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                  <span 
+                    className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium animate-pulse"
+                    style={{
+                      boxShadow: '0 0 10px rgba(255,255,255,0.6)'
+                    }}
+                  >
                     {totalItems}
                   </span>
                 )}
@@ -83,18 +88,23 @@ const Navigation = () => {
             <div className="md:hidden flex items-center space-x-2">
               <button
                 onClick={toggleCart}
-                className="relative text-white p-2"
+                className="relative text-white p-2 hover:scale-110 transition-transform duration-300"
               >
                 <ShoppingCart size={20} />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-4 w-4 flex items-center justify-center font-medium">
+                  <span 
+                    className="absolute -top-1 -right-1 bg-white text-black text-xs rounded-full h-4 w-4 flex items-center justify-center font-medium animate-pulse"
+                    style={{
+                      boxShadow: '0 0 10px rgba(255,255,255,0.6)'
+                    }}
+                  >
                     {totalItems}
                   </span>
                 )}
               </button>
               <button
                 onClick={toggleMenu}
-                className="text-white p-2"
+                className="text-white p-2 hover:scale-110 transition-transform duration-300"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -126,7 +136,9 @@ const Navigation = () => {
       </nav>
 
       {/* Cart Sidebar */}
-      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      {isCartOpen && (
+        <CartSidebar />
+      )}
     </>
   );
 };
