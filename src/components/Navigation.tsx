@@ -23,7 +23,13 @@ const Navigation = () => {
   };
 
   const toggleCart = () => {
+    console.log('Cart toggle clicked, current state:', isCartOpen);
     setIsCartOpen(!isCartOpen);
+  };
+
+  const closeCart = () => {
+    console.log('Closing cart');
+    setIsCartOpen(false);
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -136,9 +142,7 @@ const Navigation = () => {
       </nav>
 
       {/* Cart Sidebar */}
-      {isCartOpen && (
-        <CartSidebar />
-      )}
+      <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
     </>
   );
 };
