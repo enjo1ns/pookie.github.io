@@ -1,23 +1,44 @@
+
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Separator } from "@/components/ui/separator";
 
 const Shop = () => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  const products = [
+  const categories = [
+    { id: "all", name: "All Products" },
+    { id: "tshirt", name: "T-Shirts" },
+    { id: "hoodie", name: "Hoodies" },
+    { id: "sweatshirt", name: "Sweatshirts" }
+  ];
+
+  const allProducts = [
     {
       id: 1,
       name: "Gothic Black T-Shirt",
       price: 50,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "T-Shirt",
-      description: "Premium gothic black t-shirt with unique design"
+      category: "tshirt",
+      description: "Premium gothic black t-shirt with unique design",
+      bestseller: true
     },
     {
       id: 2,
@@ -25,7 +46,9 @@ const Shop = () => {
       price: 75,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "Sweatshirt",
-      description: "Comfortable dark sweatshirt for the modern goth"
+      category: "sweatshirt",
+      description: "Comfortable dark sweatshirt for the modern goth",
+      bestseller: true
     },
     {
       id: 3,
@@ -33,7 +56,9 @@ const Shop = () => {
       price: 90,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "Hoodie",
-      description: "Cozy hoodie with mysterious shadow designs"
+      category: "hoodie",
+      description: "Cozy hoodie with mysterious shadow designs",
+      bestseller: true
     },
     {
       id: 4,
@@ -41,11 +66,58 @@ const Shop = () => {
       price: 45,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "T-Shirt",
-      description: "Elegant white t-shirt with gothic aesthetics"
+      category: "tshirt",
+      description: "Elegant white t-shirt with gothic aesthetics",
+      bestseller: false
+    },
+    {
+      id: 5,
+      name: "Midnight Hoodie",
+      price: 95,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Hoodie",
+      category: "hoodie",
+      description: "Deep black hoodie for those who embrace the night",
+      bestseller: false
+    },
+    {
+      id: 6,
+      name: "Phantom Sweatshirt",
+      price: 70,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Sweatshirt",
+      category: "sweatshirt",
+      description: "Ethereal sweatshirt with phantom-inspired design",
+      bestseller: false
+    },
+    {
+      id: 7,
+      name: "Raven T-Shirt",
+      price: 55,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "T-Shirt",
+      category: "tshirt",
+      description: "Dark t-shirt featuring mystical raven artwork",
+      bestseller: false
+    },
+    {
+      id: 8,
+      name: "Eclipse Hoodie",
+      price: 100,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Hoodie",
+      category: "hoodie",
+      description: "Limited edition hoodie with eclipse motif",
+      bestseller: false
     }
   ];
 
-  const handleAddToCart = (product: typeof products[0]) => {
+  const bestSellers = allProducts.filter(product => product.bestseller);
+  const tshirts = allProducts.filter(product => product.category === "tshirt");
+  const hoodies = allProducts.filter(product => product.category === "hoodie");
+  const sweatshirts = allProducts.filter(product => product.category === "sweatshirt");
+
+  const handleAddToCart = (product: typeof allProducts[0]) => {
     addToCart({
       id: product.id,
       name: product.name,
@@ -58,6 +130,84 @@ const Shop = () => {
   const handleProductClick = (productId: number) => {
     navigate(`/product/${productId}`);
   };
+
+  const ProductCard = ({ product, index }: { product: typeof allProducts[0], index: number }) => (
+    <div
+      className="group relative rounded-2xl transition-all duration-700 cursor-pointer mx-2"
+      style={{
+        width: '280px',
+        height: '400px',
+        background: 'rgba(255, 255, 255, 0.08)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+        transform: `translateZ(${index === 1 ? '0px' : index === 0 ? '-50px' : '-50px'}) scale(${index === 1 ? '1' : '0.9'})`,
+        filter: index === 1 ? 'blur(0px)' : 'blur(1px)',
+        zIndex: index === 1 ? 10 : 5
+      }}
+      onClick={() => handleProductClick(product.id)}
+    >
+      <div className="p-6 h-full flex flex-col">
+        <div className="h-48 mb-4 overflow-hidden rounded-xl">
+          <img 
+            src={product.image} 
+            alt={product.name}
+            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+          />
+        </div>
+        
+        <div className="flex flex-col flex-grow">
+          <span className="text-xs text-gray-400 uppercase tracking-wider mb-2">
+            {product.type}
+          </span>
+          <h3 className="font-cinzel text-white text-xl mb-3 leading-tight">
+            {product.name}
+          </h3>
+          <p className="text-gray-300 text-sm mb-4 flex-grow">
+            {product.description}
+          </p>
+          
+          <div className="flex items-center justify-between">
+            <span className="text-2xl font-bold text-white">
+              ${product.price}
+            </span>
+            <Button 
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart(product);
+              }}
+              className="bg-white/10 border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300"
+            >
+              Add to Cart
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const CategoryCarousel = ({ title, products }: { title: string, products: typeof allProducts }) => (
+    <div className="mb-16">
+      <h2 className="font-cinzel text-3xl text-white mb-8 text-center">{title}</h2>
+      <Carousel
+        opts={{
+          align: "center",
+          loop: true,
+        }}
+        className="w-full max-w-5xl mx-auto"
+      >
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {products.map((product, index) => (
+            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-full md:basis-1/3">
+              <ProductCard product={product} index={1} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black" />
+        <CarouselNext className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black" />
+      </Carousel>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-black relative">
@@ -72,7 +222,7 @@ const Shop = () => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-60" />
+        <div className="absolute inset-0 bg-black bg-opacity-70" />
       </div>
 
       {/* Content */}
@@ -82,9 +232,9 @@ const Shop = () => {
         <div className="pt-24 px-6 pb-20">
           <div className="max-w-7xl mx-auto">
             {/* Page Header */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <h1 
-                className="font-cinzel text-4xl md:text-5xl text-white mb-4"
+                className="font-cinzel text-5xl md:text-6xl text-white mb-4"
                 style={{
                   textShadow: '0 0 20px rgba(255,255,255,0.5)'
                 }}
@@ -92,150 +242,71 @@ const Shop = () => {
                 Shop the Darkness
               </h1>
               <p 
-                className="font-inter text-lg text-gray-300 max-w-2xl mx-auto"
+                className="font-inter text-lg text-gray-300 max-w-2xl mx-auto mb-8"
                 style={{
                   textShadow: '0 0 10px rgba(255,255,255,0.3)'
                 }}
               >
                 Explore our collection of gothic apparel, tailored to embrace the shadows
               </p>
-            </div>
 
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    backdropFilter: 'blur(25px)',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05)'
-                  }}
-                  onMouseEnter={() => setHoveredProduct(product.id)}
-                  onMouseLeave={() => setHoveredProduct(null)}
-                  onClick={() => handleProductClick(product.id)}
-                >
-                  <div className="flex h-80">
-                    {/* Product Image Side */}
-                    <div className="w-2/5 relative overflow-hidden rounded-l-2xl">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
-                    </div>
-
-                    {/* Product Details Side */}
-                    <div className="w-3/5 p-8 flex flex-col justify-between relative">
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span 
-                            className="text-xs font-medium tracking-[3px] uppercase"
-                            style={{
-                              background: 'linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
-                            }}
-                          >
-                            {product.type}
-                          </span>
-                          <div 
-                            className="w-12 h-px"
-                            style={{
-                              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)'
-                            }}
-                          />
-                        </div>
-                        
-                        <h3 className="font-cinzel font-bold text-white text-2xl mb-4 leading-tight">
-                          {product.name}
-                        </h3>
-                        
-                        <p className="text-gray-300 text-sm leading-relaxed mb-6 opacity-90">
-                          {product.description}
-                        </p>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-col">
-                          <span className="text-gray-400 text-xs uppercase tracking-wider mb-1">Price</span>
-                          <span 
-                            className="text-3xl font-bold"
-                            style={{
-                              background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
-                            }}
-                          >
-                            ${product.price}
-                          </span>
-                        </div>
-                        
-                        <Button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(product);
-                          }}
-                          className="relative px-8 py-3 font-medium text-white border-2 border-white/20 rounded-xl transition-all duration-300 hover:border-white/40 hover:shadow-lg hover:shadow-white/10 group/btn overflow-hidden"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.08)',
-                            backdropFilter: 'blur(10px)'
-                          }}
-                        >
-                          <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-black">
-                            Add to Cart
-                          </span>
-                          <div className="absolute inset-0 bg-white transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left" />
-                        </Button>
-                      </div>
-
-                      {/* Floating Glow Effect */}
-                      {hoveredProduct === product.id && (
-                        <div 
-                          className="absolute top-4 right-4 w-20 h-20 rounded-full pointer-events-none animate-pulse"
-                          style={{
-                            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                            filter: 'blur(10px)'
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Hover Border Effect */}
-                  <div 
-                    className={`absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 ${
-                      hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    style={{
-                      background: 'linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(255,255,255,0.1))',
-                      backgroundSize: '200% 200%',
-                      animation: hoveredProduct === product.id ? 'gradient-shift 2s ease infinite' : 'none'
-                    }}
+              {/* Search Bar */}
+              <div className="max-w-md mx-auto mb-8">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Input
+                    type="text"
+                    placeholder="Search for darkness..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:bg-white/15"
                   />
                 </div>
-              ))}
+              </div>
+
+              {/* Category Navigation */}
+              <div className="flex flex-wrap justify-center gap-4 mb-8">
+                {categories.map((category) => (
+                  <Button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    variant={activeCategory === category.id ? "default" : "outline"}
+                    className={`px-6 py-2 transition-all duration-300 ${
+                      activeCategory === category.id
+                        ? "bg-white text-black hover:bg-gray-200"
+                        : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    }`}
+                  >
+                    {category.name}
+                  </Button>
+                ))}
+              </div>
             </div>
+
+            <Separator className="bg-white/20 mb-16" />
+
+            {/* Best Sellers Section */}
+            <CategoryCarousel title="Best Sellers" products={bestSellers} />
+
+            <Separator className="bg-white/20 mb-16" />
+
+            {/* T-Shirts Section */}
+            <CategoryCarousel title="T-Shirts" products={tshirts} />
+
+            <Separator className="bg-white/20 mb-16" />
+
+            {/* Hoodies Section */}
+            <CategoryCarousel title="Hoodies" products={hoodies} />
+
+            <Separator className="bg-white/20 mb-16" />
+
+            {/* Sweatshirts Section */}
+            <CategoryCarousel title="Sweatshirts" products={sweatshirts} />
           </div>
         </div>
 
         <Footer />
       </div>
-
-      {/* CSS Animation using a style tag without jsx attribute */}
-      <style>
-        {`
-          @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-          }
-        `}
-      </style>
     </div>
   );
 };
