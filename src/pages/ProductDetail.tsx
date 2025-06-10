@@ -4,13 +4,16 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, Heart, Share2, Star, ShoppingCart, Truck, Shield, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '../contexts/CartContext';
+import { useToast } from '@/hooks/use-toast';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import ProductCard from '../components/ProductCard';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { toast } = useToast();
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -173,6 +176,11 @@ const ProductDetail = () => {
 
   const product = allProducts.find(p => p.id === parseInt(id || '1')) || allProducts[0];
 
+  // Get similar products (same type, excluding current product)
+  const similarProducts = allProducts
+    .filter(p => p.type === product.type && p.id !== product.id)
+    .slice(0, 3);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -188,6 +196,32 @@ const ProductDetail = () => {
       image: product.image,
       type: product.type
     });
+
+    toast({
+      title: "Added to Cart! 🛒",
+      description: `${product.name} (${selectedSize}) has been added to your cart.`,
+      duration: 3000,
+    });
+  };
+
+  const handleSimilarProductAddToCart = (similarProduct: typeof allProducts[0]) => {
+    addToCart({
+      id: similarProduct.id,
+      name: similarProduct.name,
+      price: similarProduct.price,
+      image: similarProduct.image,
+      type: similarProduct.type
+    });
+
+    toast({
+      title: "Added to Cart! 🛒",
+      description: `${similarProduct.name} has been added to your cart.`,
+      duration: 3000,
+    });
+  };
+
+  const handleSimilarProductClick = (productId: number) => {
+    navigate(`/product/${productId}`);
   };
 
   const handleBack = () => {
@@ -217,7 +251,6 @@ const ProductDetail = () => {
         <div className="absolute inset-0 bg-black bg-opacity-80" />
       </div>
 
-      {/* Floating particles */}
       <div className="fixed inset-0 pointer-events-none z-10">
         {[...Array(15)].map((_, i) => (
           <div
@@ -279,7 +312,6 @@ const ProductDetail = () => {
                     />
                   </div>
                   
-                  {/* Enhanced Floating Action Buttons */}
                   <div className="absolute top-6 right-6 flex flex-col space-y-3 opacity-0 group-hover:opacity-100 transition-all duration-500">
                     <button
                       onClick={() => setIsFavorite(!isFavorite)}
@@ -296,7 +328,6 @@ const ProductDetail = () => {
                     </button>
                   </div>
 
-                  {/* Premium Glow Effect */}
                   <div 
                     className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                     style={{
@@ -329,7 +360,6 @@ const ProductDetail = () => {
                   ))}
                 </div>
 
-                {/* Product Title & Rating */}
                 <div>
                   <h1 
                     className="font-cinzel text-4xl md:text-5xl text-white mb-4 font-bold"
@@ -358,7 +388,6 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                {/* Enhanced Price */}
                 <div className="flex items-center space-x-4">
                   <span 
                     className="text-4xl font-bold"
@@ -383,12 +412,10 @@ const ProductDetail = () => {
                   )}
                 </div>
 
-                {/* Description */}
                 <p className="text-gray-300 text-lg leading-relaxed" style={{ textShadow: '0 0 10px rgba(255,255,255,0.1)' }}>
                   {product.description}
                 </p>
 
-                {/* Features */}
                 <div>
                   <h3 className="text-white font-semibold mb-4 text-lg" style={{ textShadow: '0 0 15px rgba(255,255,255,0.3)' }}>
                     Features
@@ -407,7 +434,6 @@ const ProductDetail = () => {
                   </ul>
                 </div>
 
-                {/* Enhanced Size Selection */}
                 <div>
                   <h3 className="text-white font-semibold mb-4 text-lg" style={{ textShadow: '0 0 15px rgba(255,255,255,0.3)' }}>
                     Size
@@ -491,6 +517,39 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
+
+            {/* Similar Products Section */}
+            {similarProducts.length > 0 && (
+              <div className="mt-24">
+                <div className="text-center mb-16">
+                  <h2 
+                    className="font-cinzel text-3xl md:text-4xl text-white font-bold tracking-wider relative inline-block"
+                    style={{
+                      textShadow: '0 0 20px rgba(255,255,255,0.3)'
+                    }}
+                  >
+                    Similar Products
+                    <div 
+                      className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-gradient-to-r from-transparent via-white/60 to-transparent"
+                    />
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                  {similarProducts.map((similarProduct) => (
+                    <div
+                      key={similarProduct.id}
+                      className="transform transition-all duration-300 hover:scale-105"
+                    >
+                      <ProductCard
+                        product={similarProduct}
+                        onAddToCart={handleSimilarProductAddToCart}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

@@ -1,4 +1,3 @@
-
 import { useState, useRef, MouseEvent } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -132,7 +131,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
               boxShadow: '0 4px 15px rgba(255, 255, 255, 0.1)'
             }}
           >
-            Add to Collection
+            Add to Cart
           </Button>
         )}
       </div>
