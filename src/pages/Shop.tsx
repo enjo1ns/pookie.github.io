@@ -1,16 +1,25 @@
+
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import { Button } from "@/components/ui/button";
+import ProductCarousel from "../components/ProductCarousel";
+import SearchBar from "../components/SearchBar";
+import CategoryButtons from "../components/CategoryButtons";
 import { useCart } from "../contexts/CartContext";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Shop = () => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const products = [
+  // Refs for section scrolling
+  const bestSellersRef = useRef<HTMLDivElement>(null);
+  const tshirtsRef = useRef<HTMLDivElement>(null);
+  const hoodiesRef = useRef<HTMLDivElement>(null);
+  const sweatshirtsRef = useRef<HTMLDivElement>(null);
+
+  const allProducts = [
     {
       id: 1,
       name: "Gothic Black T-Shirt",
@@ -42,10 +51,40 @@ const Shop = () => {
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "T-Shirt",
       description: "Elegant white t-shirt with gothic aesthetics"
+    },
+    {
+      id: 5,
+      name: "Midnight Hoodie",
+      price: 95,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Hoodie",
+      description: "Deep black hoodie with silver accents"
+    },
+    {
+      id: 6,
+      name: "Raven Sweatshirt",
+      price: 80,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Sweatshirt",
+      description: "Premium sweatshirt with raven motifs"
     }
   ];
 
-  const handleAddToCart = (product: typeof products[0]) => {
+  // Filter products based on search
+  const filteredProducts = allProducts.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.type.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Categorize products
+  const bestSellers = filteredProducts.slice(0, 4); // Top 4 as best sellers
+  const tshirts = filteredProducts.filter(p => p.type === "T-Shirt");
+  const hoodies = filteredProducts.filter(p => p.type === "Hoodie");
+  const sweatshirts = filteredProducts.filter(p => p.type === "Sweatshirt");
+
+  const categories = ["Best Sellers", "T-Shirts", "Hoodies", "Sweatshirts"];
+
+  const handleAddToCart = (product: typeof allProducts[0]) => {
     addToCart({
       id: product.id,
       name: product.name,
@@ -57,6 +96,20 @@ const Shop = () => {
 
   const handleProductClick = (productId: number) => {
     navigate(`/product/${productId}`);
+  };
+
+  const handleCategoryClick = (category: string) => {
+    const refs = {
+      "Best Sellers": bestSellersRef,
+      "T-Shirts": tshirtsRef,
+      "Hoodies": hoodiesRef,
+      "Sweatshirts": sweatshirtsRef
+    };
+    
+    refs[category as keyof typeof refs]?.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
   return (
@@ -82,7 +135,7 @@ const Shop = () => {
         <div className="pt-24 px-6 pb-20">
           <div className="max-w-7xl mx-auto">
             {/* Page Header */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <h1 
                 className="font-cinzel text-4xl md:text-5xl text-white mb-4"
                 style={{
@@ -92,150 +145,94 @@ const Shop = () => {
                 Shop the Darkness
               </h1>
               <p 
-                className="font-inter text-lg text-gray-300 max-w-2xl mx-auto"
+                className="font-inter text-lg text-gray-300 max-w-2xl mx-auto mb-8"
                 style={{
                   textShadow: '0 0 10px rgba(255,255,255,0.3)'
                 }}
               >
                 Explore our collection of gothic apparel, tailored to embrace the shadows
               </p>
+
+              {/* Search Bar */}
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+              />
+
+              {/* Category Navigation */}
+              <CategoryButtons 
+                categories={categories}
+                onCategoryClick={handleCategoryClick}
+              />
             </div>
 
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    backdropFilter: 'blur(25px)',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05)'
-                  }}
-                  onMouseEnter={() => setHoveredProduct(product.id)}
-                  onMouseLeave={() => setHoveredProduct(null)}
-                  onClick={() => handleProductClick(product.id)}
-                >
-                  <div className="flex h-80">
-                    {/* Product Image Side */}
-                    <div className="w-2/5 relative overflow-hidden rounded-l-2xl">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
-                    </div>
+            {/* Divider */}
+            <div 
+              className="w-full h-px my-16 mx-auto"
+              style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+                maxWidth: '600px'
+              }}
+            />
 
-                    {/* Product Details Side */}
-                    <div className="w-3/5 p-8 flex flex-col justify-between relative">
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span 
-                            className="text-xs font-medium tracking-[3px] uppercase"
-                            style={{
-                              background: 'linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
-                            }}
-                          >
-                            {product.type}
-                          </span>
-                          <div 
-                            className="w-12 h-px"
-                            style={{
-                              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)'
-                            }}
-                          />
-                        </div>
-                        
-                        <h3 className="font-cinzel font-bold text-white text-2xl mb-4 leading-tight">
-                          {product.name}
-                        </h3>
-                        
-                        <p className="text-gray-300 text-sm leading-relaxed mb-6 opacity-90">
-                          {product.description}
-                        </p>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-col">
-                          <span className="text-gray-400 text-xs uppercase tracking-wider mb-1">Price</span>
-                          <span 
-                            className="text-3xl font-bold"
-                            style={{
-                              background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
-                            }}
-                          >
-                            ${product.price}
-                          </span>
-                        </div>
-                        
-                        <Button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(product);
-                          }}
-                          className="relative px-8 py-3 font-medium text-white border-2 border-white/20 rounded-xl transition-all duration-300 hover:border-white/40 hover:shadow-lg hover:shadow-white/10 group/btn overflow-hidden"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.08)',
-                            backdropFilter: 'blur(10px)'
-                          }}
-                        >
-                          <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-black">
-                            Add to Cart
-                          </span>
-                          <div className="absolute inset-0 bg-white transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left" />
-                        </Button>
-                      </div>
+            {/* Product Sections */}
+            {bestSellers.length > 0 && (
+              <div ref={bestSellersRef}>
+                <ProductCarousel
+                  products={bestSellers}
+                  title="Best Sellers"
+                  onAddToCart={handleAddToCart}
+                  onProductClick={handleProductClick}
+                />
+              </div>
+            )}
 
-                      {/* Floating Glow Effect */}
-                      {hoveredProduct === product.id && (
-                        <div 
-                          className="absolute top-4 right-4 w-20 h-20 rounded-full pointer-events-none animate-pulse"
-                          style={{
-                            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                            filter: 'blur(10px)'
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
+            {tshirts.length > 0 && (
+              <div ref={tshirtsRef}>
+                <ProductCarousel
+                  products={tshirts}
+                  title="T-Shirts"
+                  onAddToCart={handleAddToCart}
+                  onProductClick={handleProductClick}
+                />
+              </div>
+            )}
 
-                  {/* Hover Border Effect */}
-                  <div 
-                    className={`absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 ${
-                      hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    style={{
-                      background: 'linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(255,255,255,0.1))',
-                      backgroundSize: '200% 200%',
-                      animation: hoveredProduct === product.id ? 'gradient-shift 2s ease infinite' : 'none'
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+            {hoodies.length > 0 && (
+              <div ref={hoodiesRef}>
+                <ProductCarousel
+                  products={hoodies}
+                  title="Hoodies"
+                  onAddToCart={handleAddToCart}
+                  onProductClick={handleProductClick}
+                />
+              </div>
+            )}
+
+            {sweatshirts.length > 0 && (
+              <div ref={sweatshirtsRef}>
+                <ProductCarousel
+                  products={sweatshirts}
+                  title="Sweatshirts"
+                  onAddToCart={handleAddToCart}
+                  onProductClick={handleProductClick}
+                />
+              </div>
+            )}
+
+            {/* No results message */}
+            {searchQuery && filteredProducts.length === 0 && (
+              <div className="text-center py-20">
+                <p className="text-white/60 text-lg">
+                  No products found matching "{searchQuery}"
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
         <Footer />
       </div>
-
-      {/* CSS Animation using a style tag without jsx attribute */}
-      <style>
-        {`
-          @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-          }
-        `}
-      </style>
     </div>
   );
 };
