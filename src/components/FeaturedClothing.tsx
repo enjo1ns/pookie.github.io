@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,33 +12,33 @@ const FeaturedClothing = () => {
   const products = [
     {
       id: 1,
-      name: "Gothic T-Shirt",
-      price: 30,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "T-Shirt",
+      name: "Eclipse Crescent Sweatshirt",
+      price: 89,
+      image: "/lovable-uploads/f0760911-03ba-4e45-b7e1-99007f081956.png",
+      type: "Sweatshirt",
       colorTheme: "purple"
     },
     {
-      id: 2,
-      name: "Dark Sweatshirt",
-      price: 45,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Sweatshirt",
+      id: 4,
+      name: "Spectral Aura T-Shirt",
+      price: 65,
+      image: "/lovable-uploads/1e1185c3-681a-44d2-b696-ffb61a8702bf.png",
+      type: "T-Shirt",
       colorTheme: "blue"
     },
     {
-      id: 3,
-      name: "Shadow Hoodie",
-      price: 60,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      id: 8,
+      name: "Sacred Gothic Hoodie",
+      price: 125,
+      image: "/lovable-uploads/d9d48bce-5da4-478a-8328-ad820c2f2e97.png",
       type: "Hoodie",
       colorTheme: "red"
     },
     {
-      id: 4,
-      name: "White Gothic T-Shirt",
-      price: 30,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      id: 5,
+      name: "Soulmate Strangers T-Shirt",
+      price: 72,
+      image: "/lovable-uploads/8ab9ed19-d1d1-4d61-8282-5a70afc63d38.png",
       type: "T-Shirt",
       colorTheme: "green"
     }

@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Heart, Share2, Star, ShoppingCart, Truck, Shield, RotateCcw } from 'lucide-react';
@@ -16,14 +17,14 @@ const ProductDetail = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // All products data - this would typically come from an API
+  // Complete products data matching the Shop page
   const allProducts = [
     {
       id: 1,
       name: "Eclipse Crescent Sweatshirt",
       price: 89,
       originalPrice: 120,
-      image: "/lovable-uploads/d47f73fe-2d4e-4c75-a133-7d1722c9bed0.png",
+      image: "/lovable-uploads/f0760911-03ba-4e45-b7e1-99007f081956.png",
       type: "Sweatshirt",
       description: "Mystical crescent moon design with celestial symbols. This premium heavyweight cotton blend sweatshirt features intricate crescent moon artwork that captures the essence of lunar mysticism. Perfect for those who find beauty in the night sky and embrace celestial energy.",
       features: ["Premium heavyweight cotton", "Celestial crescent design", "Ribbed cuffs and hem", "Unisex fit", "Pre-shrunk fabric"],
@@ -38,7 +39,7 @@ const ProductDetail = () => {
       name: "Gothic AHH Statement Sweatshirt",
       price: 95,
       originalPrice: 125,
-      image: "/lovable-uploads/31c3ee47-4532-4a41-9f8c-083b3d4400ff.png",
+      image: "/lovable-uploads/2bca998f-78eb-482c-a7cf-06b15ee4a2eb.png",
       type: "Sweatshirt",
       description: "Bold distressed lettering with gothic aesthetic. Express your dark side with this statement piece featuring weathered typography that speaks to the soul. The distressed finish gives it an authentic vintage feel.",
       features: ["Distressed print design", "Premium cotton blend", "Oversized fit", "Vintage wash", "Reinforced seams"],
@@ -48,7 +49,126 @@ const ProductDetail = () => {
       reviews: 76,
       inStock: true
     },
-    // ... keep existing code (other products)
+    {
+      id: 3,
+      name: "Understanding Archive Sweatshirt",
+      price: 92,
+      originalPrice: 118,
+      image: "/lovable-uploads/80534e7b-6e6f-45a2-b0e6-ae06d319cf33.png",
+      type: "Sweatshirt",
+      description: "Minimalist archive-inspired design with subtle branding. Modern gothic streetwear with clean lines and contemporary aesthetic. Features understanding text and logo details.",
+      features: ["Archive-inspired design", "Contrast stitching", "Premium fleece lining", "Athletic fit", "Embossed logo"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Archive', 'Modern', 'Athletic'],
+      rating: 4.8,
+      reviews: 64,
+      inStock: true
+    },
+    {
+      id: 4,
+      name: "Spectral Aura T-Shirt",
+      price: 65,
+      originalPrice: 85,
+      image: "/lovable-uploads/1e1185c3-681a-44d2-b696-ffb61a8702bf.png",
+      type: "T-Shirt",
+      description: "Haunting spectral print with gradient effects. Ethereal gothic design with mysterious aura that captivates the viewer. Features a supernatural silhouette design with purple gradients.",
+      features: ["Gradient spectral print", "100% premium cotton", "Oversized fit", "Glow-in-dark elements", "Soft texture"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Spectral', 'Gradient', 'Ethereal'],
+      rating: 4.6,
+      reviews: 52,
+      inStock: true
+    },
+    {
+      id: 5,
+      name: "Soulmate Strangers T-Shirt",
+      price: 72,
+      originalPrice: 95,
+      image: "/lovable-uploads/8ab9ed19-d1d1-4d61-8282-5a70afc63d38.png",
+      type: "T-Shirt",
+      description: "Melting figures design with philosophical text. Deep artistic expression exploring themes of connection and solitude. Features surreal melting human silhouettes with thought-provoking text.",
+      features: ["Artistic melting print", "Soft premium cotton", "Regular fit", "Fade-resistant ink", "Philosophical design"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Artistic', 'Philosophy', 'Surreal'],
+      rating: 4.8,
+      reviews: 71,
+      inStock: true
+    },
+    {
+      id: 6,
+      name: "Dark Flames T-Shirt",
+      price: 68,
+      originalPrice: 88,
+      image: "/lovable-uploads/dca438f5-b1ac-4a91-aa13-2536aa4d37d3.png",
+      type: "T-Shirt",
+      description: "Symmetrical flame pattern with gothic undertones. Fire meets darkness in this mesmerizing tribal-inspired design. Features intricate flame motifs in a symmetrical pattern.",
+      features: ["Flame pattern design", "Lightweight cotton", "Oversized fit", "Metallic ink accents", "Tribal inspired"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Flames', 'Tribal', 'Symmetrical'],
+      rating: 4.5,
+      reviews: 43,
+      inStock: true
+    },
+    {
+      id: 7,
+      name: "Thorn Crown T-Shirt",
+      price: 75,
+      originalPrice: 98,
+      image: "/lovable-uploads/85c8efda-0788-44c3-9423-e44bff45d08f.png",
+      type: "T-Shirt",
+      description: "Intricate thorn crown pattern with detailed line work. Gothic elegance meets street art in this striking design. Features elaborate thorn patterns across the chest.",
+      features: ["Detailed thorn design", "Premium ring-spun cotton", "Slim fit", "High-definition print", "Street art inspired"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Thorns', 'Elegant', 'Street Art'],
+      rating: 4.9,
+      reviews: 98,
+      inStock: true
+    },
+    {
+      id: 8,
+      name: "Sacred Gothic Hoodie",
+      price: 125,
+      originalPrice: 165,
+      image: "/lovable-uploads/d9d48bce-5da4-478a-8328-ad820c2f2e97.png",
+      type: "Hoodie",
+      description: "Religious gothic artwork with detailed embroidery. Sacred darkness meets streetwear in this powerful spiritual design. Features ornate religious iconography with gothic elements.",
+      features: ["Embroidered gothic art", "Premium heavyweight fleece", "Kangaroo pocket", "Lined hood", "Religious iconography"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Sacred', 'Religious', 'Premium'],
+      rating: 4.9,
+      reviews: 127,
+      inStock: true
+    },
+    {
+      id: 9,
+      name: "Anatomical Heart Hoodie",
+      price: 135,
+      originalPrice: 175,
+      image: "/lovable-uploads/9293a8ce-89c0-4c87-96ab-5050c02cad41.png",
+      type: "Hoodie",
+      description: "Anatomical heart with wing details. Dark romance meets gothic fashion in this hauntingly beautiful design. Features detailed anatomical heart artwork with angel wings.",
+      features: ["Anatomical heart print", "Vintage wash finish", "Oversized fit", "Drawstring hood", "Wing details"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Anatomical', 'Romance', 'Vintage'],
+      rating: 4.7,
+      reviews: 83,
+      inStock: true
+    },
+    {
+      id: 10,
+      name: "Medieval Warriors Hoodie",
+      price: 142,
+      originalPrice: 185,
+      image: "/lovable-uploads/b236a568-3dcf-4068-991b-4878f2c17daf.png",
+      type: "Hoodie",
+      description: "Medieval warrior battle scene. Dark fantasy meets modern streetwear in this epic warrior-inspired design. Features detailed medieval knight battle artwork.",
+      features: ["Medieval battle print", "Ultra-soft fleece", "Ribbed cuffs", "Front pocket", "Battle scene artwork"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Medieval', 'Warriors', 'Fantasy'],
+      rating: 4.8,
+      reviews: 115,
+      inStock: true
+    }
   ];
 
   const product = allProducts.find(p => p.id === parseInt(id || '1')) || allProducts[0];

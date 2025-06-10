@@ -74,9 +74,9 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           className="absolute inset-0 bg-gradient-to-br from-gray-800/30 to-gray-900/50 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         />
         <img 
-          src="/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png" 
+          src={product.image} 
           alt={product.name}
-          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+          className="w-full h-full object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-1 p-4"
         />
         
         {/* Floating Price Tag */}
