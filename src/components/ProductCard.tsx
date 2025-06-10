@@ -47,86 +47,127 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   return (
     <div 
       ref={cardRef}
-      className="group relative rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
+      className="group relative rounded-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer overflow-hidden"
       style={{
-        width: '230px',
-        height: '380px',
-        backgroundColor: 'rgba(16, 20, 24, 0.7)',
-        border: '1px solid #2A2F33',
-        boxShadow: '0 4px 20px rgba(255,255,255,0.1)'
+        width: '280px',
+        height: '420px',
+        background: 'linear-gradient(145deg, rgba(20, 25, 30, 0.95), rgba(10, 15, 20, 0.85))',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(255, 255, 255, 0.02)'
       }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Product Image */}
-      <div className="w-full h-48 overflow-hidden flex items-center justify-center">
+      {/* Premium Border Glow */}
+      <div 
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
+        style={{
+          background: 'linear-gradient(45deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.1))',
+          padding: '1px'
+        }}
+      />
+
+      {/* Product Image Container */}
+      <div className="relative w-full h-56 overflow-hidden rounded-t-2xl">
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-gray-800/30 to-gray-900/50 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        />
         <img 
           src="/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png" 
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
         />
+        
+        {/* Floating Price Tag */}
+        <div 
+          className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-sm font-semibold text-white z-20 transform transition-all duration-300 group-hover:scale-110"
+          style={{
+            background: 'rgba(0, 0, 0, 0.8)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)'
+          }}
+        >
+          ${product.price}
+        </div>
       </div>
 
-      {/* Product Info */}
-      <div className="p-4 text-center flex flex-col justify-between h-32">
-        <div>
-          <h3 className="font-inter font-medium text-white text-sm mb-2">
+      {/* Product Info Section */}
+      <div className="p-6 flex flex-col justify-between h-40">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span 
+              className="text-xs font-medium tracking-widest uppercase opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+              style={{
+                color: 'rgba(255, 255, 255, 0.6)',
+                fontFamily: 'Inter, sans-serif',
+                letterSpacing: '2px'
+              }}
+            >
+              {product.type}
+            </span>
+          </div>
+          
+          <h3 
+            className="font-bold text-white text-lg leading-tight transition-all duration-300 group-hover:text-gray-100"
+            style={{
+              fontFamily: 'Cinzel, serif',
+              letterSpacing: '0.5px'
+            }}
+          >
             {product.name}
           </h3>
-          <p className="text-gray-400 text-xs mb-3">
-            {product.type}
-          </p>
-          <p className="text-white font-semibold text-base mb-3">
-            ${product.price}
-          </p>
         </div>
         
         {onAddToCart && (
           <Button 
             onClick={handleAddToCart}
-            className="bg-white bg-opacity-10 border border-white border-opacity-30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm text-xs py-1"
+            className="w-full mt-4 py-2.5 text-sm font-medium transition-all duration-300 group-hover:scale-[1.02] active:scale-[0.98]"
             style={{
-              boxShadow: '0 2px 10px rgba(255, 255, 255, 0.1)'
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '12px',
+              color: 'white',
+              boxShadow: '0 4px 15px rgba(255, 255, 255, 0.1)'
             }}
           >
-            Add to Cart
+            Add to Collection
           </Button>
         )}
       </div>
 
-      {/* Moving Glow Effect that follows mouse */}
+      {/* Dynamic Mouse Glow Effect */}
       {isHovered && (
         <div 
           className="absolute pointer-events-none transition-all duration-200 ease-out"
           style={{
-            width: '120px',
-            height: '120px',
-            left: `${mousePosition.x - 60}px`,
-            top: `${mousePosition.y - 60}px`,
-            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)',
+            width: '150px',
+            height: '150px',
+            left: `${mousePosition.x - 75}px`,
+            top: `${mousePosition.y - 75}px`,
+            background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 70%)',
             borderRadius: '50%',
-            filter: 'blur(8px)',
-            zIndex: 10
+            filter: 'blur(10px)',
+            zIndex: 15
           }}
         />
       )}
 
-      {/* Hover Border Glow Effect */}
+      {/* Premium Shadow on Hover */}
       <div 
-        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -z-10"
         style={{
-          border: '2px solid rgba(255,255,255,0.6)',
-          boxShadow: '0 0 25px rgba(255,255,255,0.3), inset 0 0 25px rgba(255,255,255,0.1)'
+          boxShadow: '0 25px 50px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)',
+          transform: 'translateY(10px)'
         }}
       />
 
-      {/* Lift Effect Shadow */}
+      {/* Subtle Inner Glow */}
       <div 
-        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10"
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{
-          boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
-          transform: 'translateY(10px)'
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.02)'
         }}
       />
     </div>

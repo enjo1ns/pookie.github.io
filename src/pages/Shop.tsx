@@ -114,7 +114,7 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-black relative">
-      {/* Background Image */}
+      {/* Enhanced Background */}
       <div 
         className="fixed inset-0 z-0"
         style={{
@@ -125,55 +125,67 @@ const Shop = () => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
       </div>
 
       {/* Content */}
       <div className="relative z-10">
         <Navigation />
         
-        <div className="pt-24 px-6 pb-20">
+        <div className="pt-28 px-6 pb-24">
           <div className="max-w-7xl mx-auto">
-            {/* Page Header */}
-            <div className="text-center mb-12">
+            {/* Enhanced Page Header */}
+            <div className="text-center mb-16">
               <h1 
-                className="font-cinzel text-4xl md:text-5xl text-white mb-4"
+                className="font-cinzel text-5xl md:text-6xl text-white mb-6 font-bold"
                 style={{
-                  textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                  textShadow: '0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,255,255,0.2)',
+                  letterSpacing: '2px'
                 }}
               >
-                Shop the Darkness
+                Embrace the Darkness
               </h1>
               <p 
-                className="font-inter text-lg text-gray-300 max-w-2xl mx-auto mb-8"
+                className="font-inter text-xl text-gray-200 max-w-3xl mx-auto mb-12 leading-relaxed"
                 style={{
-                  textShadow: '0 0 10px rgba(255,255,255,0.3)'
+                  textShadow: '0 0 15px rgba(255,255,255,0.2)',
+                  letterSpacing: '0.5px'
                 }}
               >
-                Explore our collection of gothic apparel, tailored to embrace the shadows
+                Discover our curated collection of gothic elegance, where shadows meet sophistication
               </p>
 
-              {/* Search Bar */}
-              <SearchBar 
-                value={searchQuery}
-                onChange={setSearchQuery}
-              />
+              {/* Enhanced Search Bar */}
+              <div className="mb-8">
+                <SearchBar 
+                  value={searchQuery}
+                  onChange={setSearchQuery}
+                />
+              </div>
 
-              {/* Category Navigation */}
+              {/* Enhanced Category Navigation */}
               <CategoryButtons 
                 categories={categories}
                 onCategoryClick={handleCategoryClick}
               />
             </div>
 
-            {/* Divider */}
+            {/* Premium Divider */}
             <div 
-              className="w-full h-px my-16 mx-auto"
+              className="w-full h-px my-20 mx-auto relative"
               style={{
-                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
-                maxWidth: '600px'
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 80%, transparent 100%)',
+                maxWidth: '800px'
               }}
-            />
+            >
+              <div 
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white/40 rounded-full"
+                style={{
+                  boxShadow: '0 0 15px rgba(255,255,255,0.3)'
+                }}
+              />
+            </div>
 
             {/* Product Sections */}
             {bestSellers.length > 0 && (
@@ -220,12 +232,24 @@ const Shop = () => {
               </div>
             )}
 
-            {/* No results message */}
+            {/* Enhanced No Results Message */}
             {searchQuery && filteredProducts.length === 0 && (
-              <div className="text-center py-20">
-                <p className="text-white/60 text-lg">
-                  No products found matching "{searchQuery}"
-                </p>
+              <div className="text-center py-32">
+                <div 
+                  className="inline-block p-8 rounded-2xl"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(255, 255, 255, 0.05)'
+                  }}
+                >
+                  <p className="text-white/60 text-lg font-inter">
+                    No shadows found matching "<span className="text-white/80 font-semibold">{searchQuery}</span>"
+                  </p>
+                  <p className="text-white/40 text-sm mt-2">
+                    Try searching for something else...
+                  </p>
+                </div>
               </div>
             )}
           </div>

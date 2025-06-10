@@ -8,30 +8,31 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-const SearchBar = ({ value, onChange, placeholder = "Search products..." }: SearchBarProps) => {
+const SearchBar = ({ value, onChange, placeholder = "Search the shadows..." }: SearchBarProps) => {
   return (
-    <div className="relative max-w-md mx-auto">
+    <div className="relative max-w-lg mx-auto">
       <div 
-        className="relative rounded-xl overflow-hidden"
+        className="relative rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02]"
         style={{
-          background: 'rgba(255, 255, 255, 0.08)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02))',
+          backdropFilter: 'blur(25px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
         }}
       >
         <Search 
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60 z-10" 
-          size={18} 
+          className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40 z-10 transition-colors duration-300" 
+          size={20} 
         />
         <Input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="pl-12 pr-4 py-3 bg-transparent border-0 text-white placeholder:text-white/50 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="pl-14 pr-5 py-4 bg-transparent border-0 text-white placeholder:text-white/30 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-base"
           style={{
-            fontSize: '14px'
+            fontFamily: 'Inter, sans-serif',
+            letterSpacing: '0.5px'
           }}
         />
       </div>
