@@ -1,14 +1,17 @@
+
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import { Button } from "@/components/ui/button";
+import ProductCard from "../components/ProductCard";
 import { useCart } from "../contexts/CartContext";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Shop = () => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("all");
 
   const products = [
     {
@@ -17,7 +20,8 @@ const Shop = () => {
       price: 50,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "T-Shirt",
-      description: "Premium gothic black t-shirt with unique design"
+      description: "Premium gothic black t-shirt with unique design",
+      category: "tshirts"
     },
     {
       id: 2,
@@ -25,7 +29,8 @@ const Shop = () => {
       price: 75,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "Sweatshirt",
-      description: "Comfortable dark sweatshirt for the modern goth"
+      description: "Comfortable dark sweatshirt for the modern goth",
+      category: "sweatshirts"
     },
     {
       id: 3,
@@ -33,7 +38,8 @@ const Shop = () => {
       price: 90,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "Hoodie",
-      description: "Cozy hoodie with mysterious shadow designs"
+      description: "Cozy hoodie with mysterious shadow designs",
+      category: "hoodies"
     },
     {
       id: 4,
@@ -41,9 +47,48 @@ const Shop = () => {
       price: 45,
       image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
       type: "T-Shirt",
-      description: "Elegant white t-shirt with gothic aesthetics"
+      description: "Elegant white t-shirt with gothic aesthetics",
+      category: "tshirts"
+    },
+    {
+      id: 5,
+      name: "Midnight Hoodie",
+      price: 95,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "Hoodie",
+      description: "Premium midnight black hoodie",
+      category: "hoodies"
+    },
+    {
+      id: 6,
+      name: "Dark Vintage Tee",
+      price: 55,
+      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      type: "T-Shirt",
+      description: "Vintage style dark t-shirt",
+      category: "tshirts"
     }
   ];
+
+  const categories = [
+    { id: "all", name: "All", filter: () => true },
+    { id: "tshirts", name: "T-Shirts", filter: (product: any) => product.category === "tshirts" },
+    { id: "hoodies", name: "Hoodies", filter: (product: any) => product.category === "hoodies" },
+    { id: "sweatshirts", name: "Sweatshirts", filter: (product: any) => product.category === "sweatshirts" }
+  ];
+
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         product.type.toLowerCase().includes(searchTerm.toLowerCase());
+    const category = categories.find(cat => cat.id === activeCategory);
+    const matchesCategory = category ? category.filter(product) : true;
+    return matchesSearch && matchesCategory;
+  });
+
+  const bestSellers = products.slice(0, 4);
+  const tshirts = products.filter(p => p.category === "tshirts");
+  const hoodies = products.filter(p => p.category === "hoodies");
+  const sweatshirts = products.filter(p => p.category === "sweatshirts");
 
   const handleAddToCart = (product: typeof products[0]) => {
     addToCart({
@@ -57,6 +102,63 @@ const Shop = () => {
 
   const handleProductClick = (productId: number) => {
     navigate(`/product/${productId}`);
+  };
+
+  const scrollCarousel = (direction: 'left' | 'right', carouselRef: React.RefObject<HTMLDivElement>) => {
+    if (carouselRef.current) {
+      const scrollAmount = 280;
+      carouselRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const CarouselSection = ({ title, products }: { title: string; products: typeof bestSellers }) => {
+    const carouselRef = useRef<HTMLDivElement>(null);
+
+    return (
+      <div className="mb-16">
+        <h2 className="font-cinzel text-2xl text-white mb-8 text-center">{title}</h2>
+        <div className="relative">
+          <button
+            onClick={() => scrollCarousel('left', carouselRef)}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={() => scrollCarousel('right', carouselRef)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
+          >
+            <ChevronRight size={20} />
+          </button>
+          
+          <div 
+            ref={carouselRef}
+            className="flex gap-6 overflow-x-auto scrollbar-hide px-12 py-4"
+            style={{ scrollSnapType: 'x mandatory' }}
+          >
+            {products.map((product, index) => (
+              <div
+                key={product.id}
+                className="flex-shrink-0 transition-all duration-500 hover:scale-105"
+                style={{ 
+                  scrollSnapAlign: 'center',
+                  filter: 'blur(0px)',
+                }}
+                onClick={() => handleProductClick(product.id)}
+              >
+                <ProductCard
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -82,7 +184,7 @@ const Shop = () => {
         <div className="pt-24 px-6 pb-20">
           <div className="max-w-7xl mx-auto">
             {/* Page Header */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <h1 
                 className="font-cinzel text-4xl md:text-5xl text-white mb-4"
                 style={{
@@ -92,150 +194,77 @@ const Shop = () => {
                 Shop the Darkness
               </h1>
               <p 
-                className="font-inter text-lg text-gray-300 max-w-2xl mx-auto"
+                className="font-inter text-lg text-gray-300 max-w-2xl mx-auto mb-12"
                 style={{
                   textShadow: '0 0 10px rgba(255,255,255,0.3)'
                 }}
               >
                 Explore our collection of gothic apparel, tailored to embrace the shadows
               </p>
-            </div>
 
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    backdropFilter: 'blur(25px)',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05)'
-                  }}
-                  onMouseEnter={() => setHoveredProduct(product.id)}
-                  onMouseLeave={() => setHoveredProduct(null)}
-                  onClick={() => handleProductClick(product.id)}
-                >
-                  <div className="flex h-80">
-                    {/* Product Image Side */}
-                    <div className="w-2/5 relative overflow-hidden rounded-l-2xl">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
-                    </div>
-
-                    {/* Product Details Side */}
-                    <div className="w-3/5 p-8 flex flex-col justify-between relative">
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span 
-                            className="text-xs font-medium tracking-[3px] uppercase"
-                            style={{
-                              background: 'linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
-                            }}
-                          >
-                            {product.type}
-                          </span>
-                          <div 
-                            className="w-12 h-px"
-                            style={{
-                              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)'
-                            }}
-                          />
-                        </div>
-                        
-                        <h3 className="font-cinzel font-bold text-white text-2xl mb-4 leading-tight">
-                          {product.name}
-                        </h3>
-                        
-                        <p className="text-gray-300 text-sm leading-relaxed mb-6 opacity-90">
-                          {product.description}
-                        </p>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-col">
-                          <span className="text-gray-400 text-xs uppercase tracking-wider mb-1">Price</span>
-                          <span 
-                            className="text-3xl font-bold"
-                            style={{
-                              background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
-                            }}
-                          >
-                            ${product.price}
-                          </span>
-                        </div>
-                        
-                        <Button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(product);
-                          }}
-                          className="relative px-8 py-3 font-medium text-white border-2 border-white/20 rounded-xl transition-all duration-300 hover:border-white/40 hover:shadow-lg hover:shadow-white/10 group/btn overflow-hidden"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.08)',
-                            backdropFilter: 'blur(10px)'
-                          }}
-                        >
-                          <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-black">
-                            Add to Cart
-                          </span>
-                          <div className="absolute inset-0 bg-white transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left" />
-                        </Button>
-                      </div>
-
-                      {/* Floating Glow Effect */}
-                      {hoveredProduct === product.id && (
-                        <div 
-                          className="absolute top-4 right-4 w-20 h-20 rounded-full pointer-events-none animate-pulse"
-                          style={{
-                            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                            filter: 'blur(10px)'
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Hover Border Effect */}
-                  <div 
-                    className={`absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 ${
-                      hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    style={{
-                      background: 'linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(255,255,255,0.1))',
-                      backgroundSize: '200% 200%',
-                      animation: hoveredProduct === product.id ? 'gradient-shift 2s ease infinite' : 'none'
-                    }}
+              {/* Search Bar */}
+              <div className="max-w-md mx-auto mb-8">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60" size={18} />
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 transition-all duration-300"
                   />
                 </div>
-              ))}
+              </div>
+
+              {/* Category Buttons */}
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 backdrop-blur-sm border ${
+                      activeCategory === category.id
+                        ? 'bg-white/20 border-white/40 text-white'
+                        : 'bg-white/5 border-white/20 text-white/80 hover:bg-white/10 hover:border-white/30'
+                    } hover:scale-105`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Divider */}
+            <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-16" />
+
+            {/* Best Sellers Carousel */}
+            <CarouselSection title="Best Sellers" products={bestSellers} />
+
+            {/* T-Shirts Carousel */}
+            <CarouselSection title="T-Shirts" products={tshirts} />
+
+            {/* Hoodies Carousel */}
+            <CarouselSection title="Hoodies" products={hoodies} />
+
+            {/* Sweatshirts Carousel */}
+            {sweatshirts.length > 0 && (
+              <CarouselSection title="Sweatshirts" products={sweatshirts} />
+            )}
           </div>
         </div>
 
         <Footer />
       </div>
 
-      {/* CSS Animation using a style tag without jsx attribute */}
-      <style>
-        {`
-          @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-          }
-        `}
-      </style>
+      <style>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };
