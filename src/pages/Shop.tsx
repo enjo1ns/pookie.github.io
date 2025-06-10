@@ -20,53 +20,128 @@ const Shop = () => {
   const sweatshirtsRef = useRef<HTMLDivElement>(null);
 
   const allProducts = [
+    // Sweatshirts
     {
       id: 1,
-      name: "Gothic Black T-Shirt",
-      price: 50,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "T-Shirt",
-      description: "Premium gothic black t-shirt with unique design"
+      name: "Eclipse Crescent Sweatshirt",
+      price: 89,
+      image: "/lovable-uploads/d47f73fe-2d4e-4c75-a133-7d1722c9bed0.png",
+      type: "Sweatshirt",
+      description: "Mystical crescent moon design with celestial symbols. Premium heavyweight cotton blend.",
+      features: ["Premium heavyweight cotton", "Celestial crescent design", "Ribbed cuffs and hem", "Unisex fit"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.9
     },
     {
       id: 2,
-      name: "Dark Sweatshirt",
-      price: 75,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      name: "Gothic AHH Statement Sweatshirt",
+      price: 95,
+      image: "/lovable-uploads/31c3ee47-4532-4a41-9f8c-083b3d4400ff.png",
       type: "Sweatshirt",
-      description: "Comfortable dark sweatshirt for the modern goth"
+      description: "Bold distressed lettering with gothic aesthetic. Express your dark side.",
+      features: ["Distressed print design", "Premium cotton blend", "Oversized fit", "Vintage wash"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.7
     },
     {
       id: 3,
-      name: "Shadow Hoodie",
-      price: 90,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Hoodie",
-      description: "Cozy hoodie with mysterious shadow designs"
+      name: "Understanding Archive Sweatshirt",
+      price: 92,
+      image: "/lovable-uploads/bded3195-115b-4df4-802f-7ec60d8b8526.png",
+      type: "Sweatshirt",
+      description: "Minimalist archive-inspired design with subtle branding. Modern gothic streetwear.",
+      features: ["Archive-inspired design", "Contrast stitching", "Premium fleece lining", "Athletic fit"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.8
     },
+    // T-Shirts
     {
       id: 4,
-      name: "White Gothic T-Shirt",
-      price: 45,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
+      name: "Spectral Aura T-Shirt",
+      price: 65,
+      image: "/lovable-uploads/9f0fba0d-0378-492c-9687-809ff9e775a8.png",
       type: "T-Shirt",
-      description: "Elegant white t-shirt with gothic aesthetics"
+      description: "Haunting spectral print with gradient effects. Ethereal gothic design.",
+      features: ["Gradient spectral print", "100% premium cotton", "Oversized fit", "Glow-in-dark elements"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.6
     },
     {
       id: 5,
-      name: "Midnight Hoodie",
-      price: 95,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Hoodie",
-      description: "Deep black hoodie with silver accents"
+      name: "Soulmate Strangers T-Shirt",
+      price: 72,
+      image: "/lovable-uploads/8d5a7eea-b9b9-4603-9124-9d0235c0ff38.png",
+      type: "T-Shirt",
+      description: "Melting figures design with philosophical text. Deep artistic expression.",
+      features: ["Artistic melting print", "Soft premium cotton", "Regular fit", "Fade-resistant ink"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.8
     },
     {
       id: 6,
-      name: "Raven Sweatshirt",
-      price: 80,
-      image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-      type: "Sweatshirt",
-      description: "Premium sweatshirt with raven motifs"
+      name: "Dark Flames T-Shirt",
+      price: 68,
+      image: "/lovable-uploads/2cfeaf05-363d-4a7c-a8a0-70f0673dcd83.png",
+      type: "T-Shirt",
+      description: "Symmetrical flame pattern with gothic undertones. Fire meets darkness.",
+      features: ["Flame pattern design", "Lightweight cotton", "Oversized fit", "Metallic ink accents"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.5
+    },
+    {
+      id: 7,
+      name: "Thorn Crown T-Shirt",
+      price: 75,
+      image: "/lovable-uploads/b1a580e3-d874-4b27-956c-919e89a014a1.png",
+      type: "T-Shirt",
+      description: "Intricate thorn crown pattern with detailed line work. Gothic elegance.",
+      features: ["Detailed thorn design", "Premium ring-spun cotton", "Slim fit", "High-definition print"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.9
+    },
+    // Hoodies
+    {
+      id: 8,
+      name: "Sacred Gothic Hoodie",
+      price: 125,
+      image: "/lovable-uploads/215a7242-d046-43a2-baa2-def486c135d4.png",
+      type: "Hoodie",
+      description: "Religious gothic artwork with detailed embroidery. Sacred darkness meets streetwear.",
+      features: ["Embroidered gothic art", "Premium heavyweight fleece", "Kangaroo pocket", "Lined hood"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.9
+    },
+    {
+      id: 9,
+      name: "Anatomical Heart Hoodie",
+      price: 135,
+      image: "/lovable-uploads/cd3a3950-a538-40d3-9f8a-eb7d749ca7e4.png",
+      type: "Hoodie",
+      description: "Anatomical heart with wing details. Dark romance meets gothic fashion.",
+      features: ["Anatomical heart print", "Vintage wash finish", "Oversized fit", "Drawstring hood"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.7
+    },
+    {
+      id: 10,
+      name: "Medieval Warriors Hoodie",
+      price: 142,
+      image: "/lovable-uploads/fcc8db61-600d-4940-9279-28ce75cac860.png",
+      type: "Hoodie",
+      description: "Medieval warrior battle scene. Dark fantasy meets modern streetwear.",
+      features: ["Medieval battle print", "Ultra-soft fleece", "Ribbed cuffs", "Front pocket"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      inStock: true,
+      rating: 4.8
     }
   ];
 

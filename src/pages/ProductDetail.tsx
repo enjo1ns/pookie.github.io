@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Heart, Share2, Star, ShoppingCart, Truck, Shield, RotateCcw } from 'lucide-react';
@@ -17,31 +16,44 @@ const ProductDetail = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Mock product data - in real app this would come from API
-  const product = {
-    id: parseInt(id || '1'),
-    name: "Gothic Shadow T-Shirt",
-    price: 50,
-    originalPrice: 75,
-    image: "/lovable-uploads/9bb25294-fbfd-4b7e-81d4-06bb5b98295f.png",
-    type: "T-Shirt",
-    description: "Embrace the darkness with this premium gothic t-shirt. Crafted from the finest materials, this piece features intricate shadow designs that shift and dance in different lighting. Perfect for those who walk between worlds.",
-    features: [
-      "Premium 100% organic cotton",
-      "Hand-crafted shadow embroidery",
-      "Fade-resistant gothic prints",
-      "Comfortable slim fit",
-      "Machine washable"
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    tags: ['Gothic', 'Premium', 'Limited Edition', 'Bestseller'],
-    rating: 4.8,
-    reviews: 127,
-    inStock: true
-  };
+  // All products data - this would typically come from an API
+  const allProducts = [
+    {
+      id: 1,
+      name: "Eclipse Crescent Sweatshirt",
+      price: 89,
+      originalPrice: 120,
+      image: "/lovable-uploads/d47f73fe-2d4e-4c75-a133-7d1722c9bed0.png",
+      type: "Sweatshirt",
+      description: "Mystical crescent moon design with celestial symbols. This premium heavyweight cotton blend sweatshirt features intricate crescent moon artwork that captures the essence of lunar mysticism. Perfect for those who find beauty in the night sky and embrace celestial energy.",
+      features: ["Premium heavyweight cotton", "Celestial crescent design", "Ribbed cuffs and hem", "Unisex fit", "Pre-shrunk fabric"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Premium', 'Celestial', 'Bestseller'],
+      rating: 4.9,
+      reviews: 89,
+      inStock: true
+    },
+    {
+      id: 2,
+      name: "Gothic AHH Statement Sweatshirt",
+      price: 95,
+      originalPrice: 125,
+      image: "/lovable-uploads/31c3ee47-4532-4a41-9f8c-083b3d4400ff.png",
+      type: "Sweatshirt",
+      description: "Bold distressed lettering with gothic aesthetic. Express your dark side with this statement piece featuring weathered typography that speaks to the soul. The distressed finish gives it an authentic vintage feel.",
+      features: ["Distressed print design", "Premium cotton blend", "Oversized fit", "Vintage wash", "Reinforced seams"],
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      tags: ['Gothic', 'Statement', 'Vintage', 'Oversized'],
+      rating: 4.7,
+      reviews: 76,
+      inStock: true
+    },
+    // ... keep existing code (other products)
+  ];
+
+  const product = allProducts.find(p => p.id === parseInt(id || '1')) || allProducts[0];
 
   useEffect(() => {
-    // Simulate loading
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 800);
@@ -104,15 +116,16 @@ const ProductDetail = () => {
       <div className="relative z-20">
         <Navigation />
         
-        {/* Back Button */}
+        {/* Enhanced Back Button */}
         <div className="pt-20 px-6 pb-4">
           <Button
             onClick={handleBack}
             variant="ghost"
-            className="text-white hover:bg-white hover:bg-opacity-10 transition-all duration-300 mb-4"
+            className="group relative overflow-hidden text-white border border-white/20 hover:border-white/40 transition-all duration-300 backdrop-blur-md bg-white/5 hover:bg-white/10"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
+            <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            Back to Shop
+            <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </Button>
         </div>
 
@@ -126,10 +139,10 @@ const ProductDetail = () => {
                 <div 
                   className="relative rounded-3xl overflow-hidden transition-all duration-700 hover:scale-[1.02]"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+                    background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02))',
+                    backdropFilter: 'blur(25px)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    boxShadow: '0 25px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
                   }}
                 >
                   <div className="aspect-square p-8 flex items-center justify-center">
@@ -141,25 +154,35 @@ const ProductDetail = () => {
                       }`}
                       onLoad={() => setImageLoaded(true)}
                       style={{
-                        filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.1))'
+                        filter: 'drop-shadow(0 0 25px rgba(255,255,255,0.15))'
                       }}
                     />
                   </div>
                   
-                  {/* Floating Action Buttons */}
+                  {/* Enhanced Floating Action Buttons */}
                   <div className="absolute top-6 right-6 flex flex-col space-y-3 opacity-0 group-hover:opacity-100 transition-all duration-500">
                     <button
                       onClick={() => setIsFavorite(!isFavorite)}
-                      className={`w-12 h-12 rounded-full backdrop-blur-md border border-white border-opacity-20 flex items-center justify-center transition-all duration-300 hover:scale-110 ${
-                        isFavorite ? 'bg-red-500 bg-opacity-80' : 'bg-white bg-opacity-10 hover:bg-opacity-20'
+                      className={`w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 flex items-center justify-center ${
+                        isFavorite 
+                          ? 'bg-red-500/80 border-red-400/50 shadow-lg shadow-red-500/25' 
+                          : 'bg-white/10 border-white/20 hover:bg-white/20'
                       }`}
                     >
-                      <Heart className={`w-5 h-5 ${isFavorite ? 'text-white fill-white' : 'text-white'}`} />
+                      <Heart className={`w-5 h-5 transition-colors duration-300 ${isFavorite ? 'text-white fill-white' : 'text-white'}`} />
                     </button>
-                    <button className="w-12 h-12 rounded-full bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-opacity-20">
+                    <button className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-white/20">
                       <Share2 className="w-5 h-5 text-white" />
                     </button>
                   </div>
+
+                  {/* Premium Glow Effect */}
+                  <div 
+                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      boxShadow: '0 0 40px rgba(255,255,255,0.1), inset 0 0 40px rgba(255,255,255,0.05)'
+                    }}
+                  />
                 </div>
               </div>
 
@@ -171,15 +194,17 @@ const ProductDetail = () => {
                   {product.tags.map((tag, index) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 text-xs font-medium rounded-full border transition-all duration-300 hover:scale-105"
+                      className="group px-4 py-2 text-xs font-medium rounded-full border transition-all duration-300 hover:scale-105 cursor-default"
                       style={{
-                        background: 'rgba(255, 255, 255, 0.1)',
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
                         borderColor: 'rgba(255, 255, 255, 0.2)',
                         color: 'rgba(255, 255, 255, 0.9)',
-                        animationDelay: `${index * 100}ms`
+                        animationDelay: `${index * 100}ms`,
+                        backdropFilter: 'blur(10px)'
                       }}
                     >
                       {tag}
+                      <div className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </span>
                   ))}
                 </div>
@@ -189,7 +214,7 @@ const ProductDetail = () => {
                   <h1 
                     className="font-cinzel text-4xl md:text-5xl text-white mb-4 font-bold"
                     style={{
-                      textShadow: '0 0 20px rgba(255,255,255,0.3)'
+                      textShadow: '0 0 25px rgba(255,255,255,0.4), 0 0 50px rgba(255,255,255,0.1)'
                     }}
                   >
                     {product.name}
@@ -200,9 +225,9 @@ const ProductDetail = () => {
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`w-5 h-5 ${
+                          className={`w-5 h-5 transition-colors duration-300 ${
                             i < Math.floor(product.rating) 
-                              ? 'text-yellow-400 fill-yellow-400' 
+                              ? 'text-yellow-400 fill-yellow-400 drop-shadow-lg' 
                               : 'text-gray-500'
                           }`}
                         />
@@ -213,14 +238,15 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                {/* Price */}
+                {/* Enhanced Price */}
                 <div className="flex items-center space-x-4">
                   <span 
                     className="text-4xl font-bold"
                     style={{
                       background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)',
                       WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
+                      WebkitTextFillColor: 'transparent',
+                      textShadow: '0 0 20px rgba(255,255,255,0.3)'
                     }}
                   >
                     ${product.price}
@@ -230,45 +256,51 @@ const ProductDetail = () => {
                       ${product.originalPrice}
                     </span>
                   )}
-                  <span className="bg-green-500 bg-opacity-20 text-green-400 px-2 py-1 rounded text-sm font-medium">
-                    Save ${product.originalPrice! - product.price}
-                  </span>
+                  {product.originalPrice && (
+                    <span className="bg-gradient-to-r from-green-500/20 to-green-400/20 border border-green-400/30 text-green-400 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                      Save ${product.originalPrice - product.price}
+                    </span>
+                  )}
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 text-lg leading-relaxed">
+                <p className="text-gray-300 text-lg leading-relaxed" style={{ textShadow: '0 0 10px rgba(255,255,255,0.1)' }}>
                   {product.description}
                 </p>
 
                 {/* Features */}
                 <div>
-                  <h3 className="text-white font-semibold mb-4 text-lg">Features</h3>
-                  <ul className="space-y-2">
+                  <h3 className="text-white font-semibold mb-4 text-lg" style={{ textShadow: '0 0 15px rgba(255,255,255,0.3)' }}>
+                    Features
+                  </h3>
+                  <ul className="space-y-3">
                     {product.features.map((feature, index) => (
                       <li 
                         key={feature}
-                        className="flex items-center text-gray-300 transition-all duration-300 hover:text-white"
+                        className="flex items-center text-gray-300 transition-all duration-300 hover:text-white group"
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
-                        <div className="w-2 h-2 bg-white rounded-full mr-3 opacity-60" />
+                        <div className="w-2 h-2 bg-white rounded-full mr-4 opacity-60 group-hover:opacity-100 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-white/20" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Size Selection */}
+                {/* Enhanced Size Selection */}
                 <div>
-                  <h3 className="text-white font-semibold mb-4 text-lg">Size</h3>
+                  <h3 className="text-white font-semibold mb-4 text-lg" style={{ textShadow: '0 0 15px rgba(255,255,255,0.3)' }}>
+                    Size
+                  </h3>
                   <div className="flex flex-wrap gap-3">
                     {product.sizes.map((size) => (
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
-                        className={`w-12 h-12 rounded-lg border-2 font-medium transition-all duration-300 hover:scale-105 ${
+                        className={`w-12 h-12 rounded-xl border-2 font-medium transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
                           selectedSize === size
-                            ? 'border-white bg-white bg-opacity-20 text-white'
-                            : 'border-gray-600 text-gray-400 hover:border-gray-400'
+                            ? 'border-white bg-white/20 text-white shadow-lg shadow-white/10'
+                            : 'border-gray-600 bg-white/5 text-gray-400 hover:border-gray-400 hover:bg-white/10'
                         }`}
                       >
                         {size}
@@ -277,21 +309,21 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                {/* Quantity & Add to Cart */}
+                {/* Enhanced Quantity & Add to Cart */}
                 <div className="flex items-center space-x-6">
                   <div className="flex items-center space-x-3">
                     <span className="text-white font-medium">Quantity:</span>
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-10 h-10 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white hover:bg-opacity-20 transition-all duration-300"
+                        className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300 backdrop-blur-sm hover:scale-105"
                       >
                         -
                       </button>
                       <span className="w-12 text-center text-white font-medium">{quantity}</span>
                       <button
                         onClick={() => setQuantity(quantity + 1)}
-                        className="w-10 h-10 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white hover:bg-opacity-20 transition-all duration-300"
+                        className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300 backdrop-blur-sm hover:scale-105"
                       >
                         +
                       </button>
@@ -300,28 +332,40 @@ const ProductDetail = () => {
 
                   <Button
                     onClick={handleAddToCart}
-                    className="flex-1 h-14 text-lg font-medium bg-white bg-opacity-10 border-2 border-white border-opacity-30 text-white hover:bg-white hover:text-black transition-all duration-500 backdrop-blur-sm group overflow-hidden relative"
+                    className="flex-1 h-14 text-lg font-medium relative overflow-hidden group"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05))',
+                      backdropFilter: 'blur(20px)',
+                      border: '2px solid rgba(255, 255, 255, 0.3)',
+                      borderRadius: '16px'
+                    }}
                   >
-                    <span className="relative z-10 flex items-center">
+                    <span className="relative z-10 flex items-center text-white transition-colors duration-500 group-hover:text-black">
                       <ShoppingCart className="mr-2 h-5 w-5" />
                       Add to Cart - ${product.price * quantity}
                     </span>
-                    <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                    <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-xl" />
                   </Button>
                 </div>
 
-                {/* Trust Signals */}
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white border-opacity-10">
-                  <div className="flex items-center space-x-2 text-gray-300">
-                    <Truck className="w-5 h-5" />
+                {/* Enhanced Trust Signals */}
+                <div 
+                  className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 rounded-xl p-4"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
+                    backdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="flex items-center space-x-2 text-gray-300 group hover:text-white transition-colors duration-300">
+                    <Truck className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                     <span className="text-sm">Free Shipping</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-gray-300">
-                    <Shield className="w-5 h-5" />
+                  <div className="flex items-center space-x-2 text-gray-300 group hover:text-white transition-colors duration-300">
+                    <Shield className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                     <span className="text-sm">Secure Payment</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-gray-300">
-                    <RotateCcw className="w-5 h-5" />
+                  <div className="flex items-center space-x-2 text-gray-300 group hover:text-white transition-colors duration-300">
+                    <RotateCcw className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                     <span className="text-sm">Easy Returns</span>
                   </div>
                 </div>
