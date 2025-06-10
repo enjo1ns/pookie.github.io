@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import { X, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react';
 
 interface CartSidebarProps {
@@ -11,9 +12,18 @@ interface CartSidebarProps {
 
 const CartSidebar = ({ isOpen = true, onClose }: CartSidebarProps) => {
   const { items, removeFromCart, updateQuantity, getTotalItems, getTotalPrice, clearCart } = useCart();
+  const { toast } = useToast();
 
   const handleCheckout = () => {
-    alert('Order placed successfully! Thank you for your purchase.');
+    const totalItems = getTotalItems();
+    const totalPrice = getTotalPrice();
+    
+    toast({
+      title: "Order placed successfully! ✨",
+      description: `${totalItems} item${totalItems > 1 ? 's' : ''} • $${totalPrice} • Thank you for your purchase`,
+      duration: 4000,
+    });
+    
     clearCart();
     if (onClose) onClose();
   };
