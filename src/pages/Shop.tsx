@@ -15,6 +15,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Separator } from "@/components/ui/separator";
+import ProductCard from "../components/ProductCard";
 
 const Shop = () => {
   const { addToCart } = useCart();
@@ -112,6 +113,16 @@ const Shop = () => {
     }
   ];
 
+  const filteredProducts = allProducts.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         product.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesCategory = activeCategory === "all" || product.category === activeCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
+
   const bestSellers = allProducts.filter(product => product.bestseller);
   const tshirts = allProducts.filter(product => product.category === "tshirt");
   const hoodies = allProducts.filter(product => product.category === "hoodie");
@@ -131,61 +142,6 @@ const Shop = () => {
     navigate(`/product/${productId}`);
   };
 
-  const ProductCard = ({ product, index }: { product: typeof allProducts[0], index: number }) => (
-    <div
-      className="group relative rounded-2xl transition-all duration-700 cursor-pointer mx-2"
-      style={{
-        width: '280px',
-        height: '400px',
-        background: 'rgba(255, 255, 255, 0.08)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-        transform: `translateZ(${index === 1 ? '0px' : index === 0 ? '-50px' : '-50px'}) scale(${index === 1 ? '1' : '0.9'})`,
-        filter: index === 1 ? 'blur(0px)' : 'blur(1px)',
-        zIndex: index === 1 ? 10 : 5
-      }}
-      onClick={() => handleProductClick(product.id)}
-    >
-      <div className="p-6 h-full flex flex-col">
-        <div className="h-48 mb-4 overflow-hidden rounded-xl">
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
-          />
-        </div>
-        
-        <div className="flex flex-col flex-grow">
-          <span className="text-xs text-gray-400 uppercase tracking-wider mb-2">
-            {product.type}
-          </span>
-          <h3 className="font-cinzel text-white text-xl mb-3 leading-tight">
-            {product.name}
-          </h3>
-          <p className="text-gray-300 text-sm mb-4 flex-grow">
-            {product.description}
-          </p>
-          
-          <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-white">
-              ${product.price}
-            </span>
-            <Button 
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddToCart(product);
-              }}
-              className="bg-white/10 border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300"
-            >
-              Add to Cart
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   const CategoryCarousel = ({ title, products }: { title: string, products: typeof allProducts }) => (
     <div className="mb-16">
       <h2 className="font-cinzel text-3xl text-white mb-8 text-center">{title}</h2>
@@ -194,20 +150,60 @@ const Shop = () => {
           align: "center",
           loop: true,
         }}
-        className="w-full max-w-5xl mx-auto"
+        className="w-full max-w-6xl mx-auto perspective-1000"
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {products.map((product, index) => (
             <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-full md:basis-1/3">
-              <ProductCard product={product} index={1} />
+              <div 
+                className="transition-all duration-700 transform-gpu"
+                style={{
+                  transform: `translateZ(${index === 1 ? '0px' : '-100px'}) scale(${index === 1 ? '1' : '0.85'})`,
+                  filter: index === 1 ? 'blur(0px)' : 'blur(2px)',
+                  opacity: index === 1 ? 1 : 0.6,
+                  zIndex: index === 1 ? 10 : 5
+                }}
+              >
+                <ProductCard 
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                />
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black" />
-        <CarouselNext className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black" />
+        <CarouselPrevious className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-110 hover:shadow-2xl" />
+        <CarouselNext className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-110 hover:shadow-2xl" />
       </Carousel>
     </div>
   );
+
+  const scrollToCategory = (categoryId: string) => {
+    setActiveCategory(categoryId);
+    
+    let sectionId = '';
+    switch(categoryId) {
+      case 'all':
+        sectionId = 'bestsellers';
+        break;
+      case 'tshirt':
+        sectionId = 'tshirts';
+        break;
+      case 'hoodie':
+        sectionId = 'hoodies';
+        break;
+      case 'sweatshirt':
+        sectionId = 'sweatshirts';
+        break;
+      default:
+        sectionId = 'bestsellers';
+    }
+    
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black relative">
@@ -252,14 +248,14 @@ const Shop = () => {
 
               {/* Search Bar */}
               <div className="max-w-md mx-auto mb-8">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <div className="relative group">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 transition-all duration-300 group-hover:text-white" />
                   <Input
                     type="text"
                     placeholder="Search for darkness..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:bg-white/15"
+                    className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:bg-white/15 transition-all duration-300 hover:bg-white/15 hover:border-white/40"
                   />
                 </div>
               </div>
@@ -269,15 +265,21 @@ const Shop = () => {
                 {categories.map((category) => (
                   <Button
                     key={category.id}
-                    onClick={() => setActiveCategory(category.id)}
+                    onClick={() => scrollToCategory(category.id)}
                     variant={activeCategory === category.id ? "default" : "outline"}
-                    className={`px-6 py-2 transition-all duration-300 ${
+                    className={`px-6 py-2 transition-all duration-500 transform hover:scale-110 hover:shadow-2xl relative overflow-hidden group ${
                       activeCategory === category.id
-                        ? "bg-white text-black hover:bg-gray-200"
-                        : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                        ? "bg-white text-black hover:bg-gray-200 shadow-lg shadow-white/20"
+                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/40"
                     }`}
+                    style={{
+                      boxShadow: activeCategory === category.id 
+                        ? '0 0 30px rgba(255,255,255,0.3), 0 10px 20px rgba(0,0,0,0.3)' 
+                        : '0 0 15px rgba(255,255,255,0.1)'
+                    }}
                   >
-                    {category.name}
+                    <span className="relative z-10">{category.name}</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   </Button>
                 ))}
               </div>
@@ -286,22 +288,57 @@ const Shop = () => {
             <Separator className="bg-white/20 mb-16" />
 
             {/* Best Sellers Section */}
-            <CategoryCarousel title="Best Sellers" products={bestSellers} />
+            <div id="bestsellers">
+              <CategoryCarousel title="Best Sellers" products={bestSellers} />
+            </div>
 
             <Separator className="bg-white/20 mb-16" />
 
             {/* T-Shirts Section */}
-            <CategoryCarousel title="T-Shirts" products={tshirts} />
+            <div id="tshirts">
+              <CategoryCarousel title="T-Shirts" products={tshirts} />
+            </div>
 
             <Separator className="bg-white/20 mb-16" />
 
             {/* Hoodies Section */}
-            <CategoryCarousel title="Hoodies" products={hoodies} />
+            <div id="hoodies">
+              <CategoryCarousel title="Hoodies" products={hoodies} />
+            </div>
 
             <Separator className="bg-white/20 mb-16" />
 
             {/* Sweatshirts Section */}
-            <CategoryCarousel title="Sweatshirts" products={sweatshirts} />
+            <div id="sweatshirts">
+              <CategoryCarousel title="Sweatshirts" products={sweatshirts} />
+            </div>
+
+            {/* Search Results Section */}
+            {searchQuery && (
+              <>
+                <Separator className="bg-white/20 mb-16" />
+                <div className="mb-16">
+                  <h2 className="font-cinzel text-3xl text-white mb-8 text-center">
+                    Search Results for "{searchQuery}"
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    {filteredProducts.map(product => (
+                      <div key={product.id} className="flex justify-center">
+                        <ProductCard 
+                          product={product}
+                          onAddToCart={handleAddToCart}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  {filteredProducts.length === 0 && (
+                    <p className="text-center text-gray-400 text-lg">
+                      No products found matching your search.
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
